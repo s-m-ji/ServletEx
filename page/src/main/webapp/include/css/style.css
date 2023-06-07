@@ -74,6 +74,11 @@
             background-size: cover;
 
         }
+        
+        .loginbox form.on {
+        	display:none;
+        }
+        
         #maincontent{
             width: 550px;
             height: 100%;
@@ -92,7 +97,9 @@
         #rightside .loginbox{
             width: 250px;
             height: 80px;
-            background-color: aqua;
+            background-color: royalblue;
+            text-align: center;
+            color: #fff;
         }
         #rightside .loginbox #login{
             width: 150px;
@@ -113,7 +120,7 @@
             text-align: center;
         }
         #rightside #info a:hover{
-            color: aliceblue;
+            color: blue;
         }
 
         #rightside .side2{

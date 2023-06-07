@@ -3,6 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<!-- <link rel="icon" href="data:;base64,iVBORw0KGgo="> -->
+<link rel="icon" href="/favicon.ico">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>

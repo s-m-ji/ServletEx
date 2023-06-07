@@ -4,11 +4,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
 <title>RequestMain</title>
 </head>
 <body>
 	<h2>1. 클라이언트와 서버의 환경정보 읽기</h2>
-	<!-- method를 지정하지않은 경우는 모두 get방식(기본)으로 호출된다. -->
+	<!-- method를 지정하지않은 경우는 모두 get방식(기본)으로 호출된다 *url 호출 : 무조건 GET방식 -->
 	<a href="RequestWebInfo.jsp?eng=hi&kor=앙뇽">Get 방식으로 요청</a>
 	<!-- 404 : 페이지를 찾을 수 없음
 				서버에 파일이 없는 경우, 또는 경로가 일치하지 않는 경우 
@@ -39,6 +40,26 @@
         <input type="submit" value="전송하기" />	
 	</form>
 	
-	
+	<h2>3. HTTP 요청 헤더 정보 읽기</h2>
+		<a href= "RequestHeader.jsp">요청 헤더 정보 읽기</a>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
