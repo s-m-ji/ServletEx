@@ -19,8 +19,14 @@
 		} else {
 			id = "???";
 			pw = "???";
+			
+			/* Redirect 방식 */
 			out.print("로그인 실패 ~~~ \n");
-			response.sendRedirect("ResponseMain.jsp?loginErr=1");
+			/* response.sendRedirect("ResponseMain.jsp?loginErr=1"); */
+
+			/* forward 방식 */
+			RequestDispatcher rd = request.getRequestDispatcher("ResponseMain.jsp");
+			rd.forward(request, response);
 		}
 		
 		/* out.printf("id : %s, pw : %s", id, pw); */

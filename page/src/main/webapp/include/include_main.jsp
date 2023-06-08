@@ -28,11 +28,21 @@
             <%
             } 
             
-            String name = request.getParameter("name");         
+           String name = request.getParameter("name");
             /* if("id".equalsIgnoreCase(name)){ */
-            if(name != null && !name.equals("")) {
+            /* if(name != null && !name.equals("")) {
             	out.print("<script>alert('" + name + " 안녕?')</script>");
-            	out.print(name + " 안녕~");
+            	out.print(name + " 안녕~"); */
+           String loginId = ""; 
+           		if(session.getAttribute("id") != null){
+					loginId = (String)session.getAttribute("id");
+           		}
+           		if(loginId != null && !loginId.equals("")){
+           %>
+           		<%= loginId %> 안녕 ?
+           		<br>
+				<button onclick='location.href="logoutGogreen.jsp"'>로그아웃</button>
+           <% 	
             } else {
             %>
             	<form action="loginAction.jsp" method="post">

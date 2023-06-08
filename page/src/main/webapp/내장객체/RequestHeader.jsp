@@ -18,7 +18,6 @@
 		// 컬렉션에서 사용됨 (list, set, map)
 		
 		Enumeration headers = request.getHeaderNames();
-		/* Iterator header = header.entries(); */
 	
 		// .Next()와 비슷한 역할 : 요소가 있으면 가지고 오고 아니면 x.
 		while(headers.hasMoreElements()){

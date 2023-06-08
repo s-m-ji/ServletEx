@@ -12,7 +12,11 @@
 		String pw = request.getParameter("userpw");
 		
 		if("id".equalsIgnoreCase(id) && "pw".equalsIgnoreCase(pw)){
-			response.sendRedirect("gogreen.jsp?name="+id);
+			// 로그인 성공하면 id를 세션에 저장
+			session.setAttribute("id", id);
+			
+			/* response.sendRedirect("gogreen.jsp?name="+id); */
+			response.sendRedirect("gogreen.jsp");
 		} else {
 			/* response.sendRedirect("gogreen.jsp?login=N"); */
 			
