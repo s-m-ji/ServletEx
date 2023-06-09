@@ -115,9 +115,12 @@
         #rightside .loginbox #button input{
             width: 100px;
             height: 80px;
+            margin: 0;
+    		border-radius: 0;
         }
         #rightside #info{
             text-align: center;
+            width: max-content;
         }
         #rightside #info a:hover{
             color: blue;

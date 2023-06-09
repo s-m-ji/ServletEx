@@ -1,3 +1,4 @@
+<%@page import="utils.CookieManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>  
 <p>메인 main</p>     
@@ -21,7 +22,9 @@
             <!-- 로그인 성공 : form 숨김처리 + "id 안녕~" 출력 -->
             
             <%
-            String login = request.getParameter("login");
+            String userId = CookieManager.readCookie(request, "userId");
+            
+            String login = request.getParameter("login");            
             if("N".equalsIgnoreCase(login)){
 			%>
             	<script>alert("🤔 로그인 실패 🤔");</script>
@@ -47,22 +50,25 @@
             %>
             	<form action="loginAction.jsp" method="post">
                 <div id='login'>
-                    <input type="text" name="userid" id="userid" placeholder='ID를 입력해주세요.' required="required">
+                    <input type="text" name="userid" id="userid" placeholder='ID를 입력해주세요.' required="required" value="<%= userId%>">
                     <input type="password" name="userpw" id="userpw" placeholder='PW를 입력해주세요.' required="required">
                 </div>
                 <div id='button'>
                 <input type="submit" value="로그인">
                 </div>
-            	</form>
-            <%
-            }
-            %>
             </div>
             <div id='info'>
+            	<!-- checkbox는 체크되었을 때만 서버에 값이 넘어감
+            			체크 안 할시에는 null이 출력됨 -->
+                <input type="checkbox" name="save_check" value="y"> ID저장
                 <a href="register.jsp">회원가입</a>
                 <a href="">ID찾기</a>
                 <a href="">PW찾기</a>
             </div>
+            </form>
+             <%
+            }
+            %>
         </div>
 
         <div class='side2'>

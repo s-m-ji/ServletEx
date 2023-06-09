@@ -1,3 +1,4 @@
+<%@page import="utils.CookieManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -11,9 +12,16 @@
 		String id = request.getParameter("userid"); 
 		String pw = request.getParameter("userpw");
 		
+			String sCheck = request.getParameter("save_check");
+		
+		if("y".equals(sCheck)){
+			CookieManager.makeCookie(response, "userId", id, 3600);
+		}
+		
 		if("id".equalsIgnoreCase(id) && "pw".equalsIgnoreCase(pw)){
 			// 로그인 성공하면 id를 세션에 저장
 			session.setAttribute("id", id);
+			
 			
 			/* response.sendRedirect("gogreen.jsp?name="+id); */
 			response.sendRedirect("gogreen.jsp");

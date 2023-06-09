@@ -1,3 +1,4 @@
+<%@page import="java.net.URLEncoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -9,6 +10,8 @@
 <body>
 	<!-- 
 		cookie
+		요청 시 요청 헤더에 쿠키 정보를 포함하여 요청함
+		
 		클라이언트의 상태 정보를  클라이언트 pc에 저장
 		로그인 아이디, 팝업창 제어 등등
 		
@@ -22,14 +25,14 @@
 			유지기간 : 쿠키를 유지할 기간
 	
 	 -->
-	 <h2>1. 쿠키 설정</h2>
+	 <h2>국희 설정 🍪</h2>
 	 <%
 	 	/* 국희 생성
 	 		new Cookie(이름, 값);
 	 			이름: 국희를 구별하는 이름
 	 			값: 국희에 저장할 실제 데이터
 	 	*/
-	 	Cookie ck = new Cookie("toughCookie", "청바지");
+	 	Cookie ck = new Cookie("toughCookie", URLEncoder.encode("청바지","UTF-8"));
 	 			
 	 	// 국희가 적용될 경로를 지정(하위경로까지 사용가능)
 	 	// request.getContextPath() : request 객체로부터 Context 루트 조회
@@ -42,6 +45,9 @@
 	 	// 생성한 국희를 응답 객체에 추가
 	 	response.addCookie(ck);
 	 %>
+	 <h2>페이지 이동 후 국희 값 확인하기 🍪</h2>
+	 <a href="cookieResult.jsp">국희 값 출력</a>
+	 
 </body>
 </html>
 
