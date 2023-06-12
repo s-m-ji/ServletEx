@@ -49,6 +49,14 @@ right: auto;
 mark {
   background-color: #adff2f96;
 }
+
+.point {
+            background: yellowgreen;
+    padding: 5px 15px;
+    border-radius: 15px;
+    display: inline-block;
+        font-weight: bold;
+        }
 a {
   border-radius: 15px;
   padding: 5px 15px;
@@ -61,7 +69,8 @@ a {
 
 button,
 input[type="submit"],
-input[type="button"] {
+input[type="button"],
+input[type="reset"] {
   border-radius: 15px;
   padding: 5px 15px;
   margin: 10px;
@@ -69,7 +78,8 @@ input[type="button"] {
 button:hover,
 a:hover,
 input[type="submit"]:hover,
-input[type="button"]:hover {
+input[type="button"]:hover,
+input[type="reset"]:hover {
   cursor: pointer;
   border-color: #bcbcbc;
   background: linear-gradient(#eee, #bcbcbc);
@@ -81,4 +91,15 @@ input[type="button"]:hover {
   overflow: scroll;
   margin-top: 5px;
   margin-bottom: 15px;
+}
+
+table {
+border-collapse : collapse;
+}
+.tablesorter-default {
+	    width: fit-content;
+	    font-size: 1rem;
+}
+.tablesorter-default th.tablesorter-header, .tablesorter-default td {
+padding: 10px 20px;
 }
