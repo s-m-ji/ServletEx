@@ -13,6 +13,12 @@
 <link rel="stylesheet" href="../css/style.css">
 <title>ExeUpdate.jsp</title>
 </head>
+<script>
+	window.addEventListener('beforeunload', (e)=>{
+		e.preventDefault();
+		e.returnValue="";
+	});
+</script>
 <body>
 	<h2>회원 추가</h2>
 	<%
@@ -36,7 +42,6 @@
 		} else {
 		out.print("🙅‍♀️ 회원 등록 중 오류가 발생했습니다. 🙅‍♀️");
 	}
-	
 	
 	%>
 

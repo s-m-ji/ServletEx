@@ -21,6 +21,7 @@
 
     <input type="submit" value="가입하기">
     <input type="reset" value="다시쓰기">
+    <button type="button" onclick="location.href='login.jsp' ">📝 로그인으로 이동 📝</button>
   </form>
 </body>
 </html>
