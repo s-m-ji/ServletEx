@@ -64,11 +64,11 @@ a {
   background-color: buttonface;
   border-width: 2px;
   border-style: outset;
-  border-color: buttonborder;
+  border-color: #898989;
   color: mediumslateblue;
 }
 
-td a {
+.listTable td a {
 	border-width:0;
 }
 
@@ -81,6 +81,7 @@ select {
   border-radius: 15px;
   padding: 5px 15px;
   margin: 10px;
+  
 }
 button:hover,
 a:hover,
@@ -106,15 +107,22 @@ input#searchWord{
 }
 
 table {
-border-collapse : collapse;
-width: 80%;
+	border-collapse : collapse;
+	width: 100%;
+}
+.linkTable {
+	background-color: #d8d8fd;
 }
 .tablesorter-default {
 	    width: fit-content;
 	    font-size: 1rem;
 }
-.tablesorter-default th.tablesorter-header, .tablesorter-default td, th, td {
+ th, td,
+.tablesorter-default th.tablesorter-header, .tablesorter-default td
+  {
 	padding: 10px 20px;
+	vertical-align: middle;
+	text-align:center;
 }
 td.content {
 	height:300px;
@@ -122,7 +130,18 @@ td.content {
 .btnTable { 
 	  text-align: right;
 }
-.btnTable th {
+.btnTable th, .btnTable td {
 	display: inline-block;
 	padding: 10px;
 }
+.tableWrite td:first-child {
+	padding: 10px 0;
+}
+
+.viewTable th, .listTable th {
+	background-color: #dfdfdf;
+}
+.writeTable th {
+	vertical-align: top;
+} 
+

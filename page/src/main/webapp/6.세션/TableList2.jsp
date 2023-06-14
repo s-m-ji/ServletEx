@@ -1,5 +1,5 @@
 <%@page import="java.util.List"%>
-<%@page import="dao.TableDao"%>
+<%@page import="dao.TableDao2"%>
 <%@page import="dto.Table"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="../css/style.css">
-<title>TableList.jsp</title>
+<title>TableList2.jsp</title>
 </head>
 <body>
 	<%
@@ -18,14 +18,16 @@
 		response.sendRedirect("LoginForm.jsp");
 		return;
 	}
-		
+
 	String sField = request.getParameter("searchField");
 	String sWord = request.getParameter("searchWord");
 	sWord = sWord == null ? "" : sWord;
 	
-	TableDao tDao = new TableDao();
+	TableDao2 tDao = new TableDao2();
 	List<Table> list = tDao.getList(sField, sWord);
 	int totalCnt = tDao.getTotalCnt(sField, sWord);
+	/* tDao.getListPage(sField, sWord, 1, 3); */
+	
 	
 	// 검색어가 null이 아니면 검색 기능을 추가......
 	/* if(sWord != null){

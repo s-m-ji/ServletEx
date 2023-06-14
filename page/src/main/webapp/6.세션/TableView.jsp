@@ -13,14 +13,15 @@
 <body>
 	<%
 	String num = request.getParameter("num");
+	String sField = request.getParameter("searchField");
+	String sWord = request.getParameter("searchWord");
 	
 	TableDao tDao = new TableDao();
-	List<Table> list = tDao.getList();
+	List<Table> list = tDao.getList(sField, sWord);
 	%>
 	<jsp:include page="Link.jsp" />
 	<h2>상세 보기(View)</h2>
-	<table border=1>
-
+	<table border=1 class="viewTable">
 		<tr>
 			<th>번호</th>
 			<th>제목</th>			
@@ -35,7 +36,7 @@
 	%>
 		<tr>
 			<td><%= t.getNum() %></td>
-			<td><a href=" View.jsp?num= <%= t.getNum()%>"><%= t.getTitle()%></a></td>			
+			<td><%= t.getTitle()%></td>			
 			<td><%= t.getId() %></td>
 			<td><%= t.getPostdate() %></td>
 			<td><%= t.getVisitcount() %></td>
@@ -50,7 +51,7 @@
 		for(Table t : list){	
 			if(num.equals(t.getNum())){
 	%>
-			<td class="content"  colspan="5" align="center"><%= t.getContent() %></td>
+			<td class="content"  colspan="5"><%= t.getContent() %></td>
 	<%
 		}
 	}
@@ -61,11 +62,10 @@
 	<!-- 목록 조회 버튼 테이블 -->
 	<table class="btnTable">
 		<tr>
-		<th><a href="Edit.jsp?">글 수정</a></th>
-		<th ><a href="Delete.jsp?">글 삭제</a></th>
-		<th ><a href="TableList.jsp">목록 조회</a></th>
+		<td><button type="button" onclick="location.href='Delete.jsp?">글 삭제</button></td>
+		<td><button type="button" onclick="location.href='Edit.jsp?">글 수정</button></td>
+		<td><button type="button" onclick="location.href='TableList.jsp">목록 조회</button></td>
 		</tr>
-		
 	</table>
 </body>
 </html>
