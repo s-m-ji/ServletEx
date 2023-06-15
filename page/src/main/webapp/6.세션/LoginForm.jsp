@@ -29,7 +29,7 @@
    	<%
    	} else {
    	%> 	
-    <form action="LoginProcess.jsp" method="post" name="loginFrm"
+    <form action="../6.세션/LoginProcess.jsp" method="post" name="loginFrm"
         onsubmit="return validateForm(this);">
         아이디 : <input type="text" name="user_id" required="required"/><br />
         패스워드 : <input type="password" name="user_pw" required="required"/><br />

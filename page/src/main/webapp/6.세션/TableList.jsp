@@ -54,6 +54,9 @@
 	</form>
 	<!-- 게시글 목록 테이블 -->
 	<table class="listTable" border=1>
+	<colgroup>
+    	<col width="50px" />
+  	</colgroup>
 	<%
 	if(list.isEmpty()){
 	%>

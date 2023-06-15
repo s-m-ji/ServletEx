@@ -7,18 +7,20 @@ public class Board {
 	private String content;
 	private String id;
 	private String postdate;
+	private String editdate;
 	private int count;
 
 	public Board() {
 	}
 	
-	public Board(int num, String title, String content, String id, String postdate, int count) {
+	public Board(int num, String title, String content, String id, String postdate, String editdate, int count) {
 		super();
 		this.num = num;
 		this.title = title;
 		this.content = content;
 		this.id = id;
 		this.postdate = postdate;
+		this.editdate = editdate;
 		this.count = count;
 	}
 
@@ -68,6 +70,14 @@ public class Board {
 
 	public void setCount(int count) {
 		this.count = count;
+	}
+
+	public String getEditdate() {
+		return editdate;
+	}
+
+	public void setEditdate(String editdate) {
+		this.editdate = editdate;
 	}
 
 	

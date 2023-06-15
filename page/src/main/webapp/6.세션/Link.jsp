@@ -13,6 +13,8 @@
 
     // 만료 시간을 문자열로 변환
     String exTimeString = dateFormat.format(exTime);
+    String nowTimeString = dateFormat.format(now.getTime());
+
 %>
 <script>
 // 만료 시간과 남은 시간을 표시하는 함수
@@ -38,7 +40,6 @@ function displayExTime() {
 // 페이지 로드 시 만료 시간 표시 함수 호출
 window.onload = displayExTime;
 </script>
-
 <table class="linkTable"> 
     <tr>
         <td align="center">
@@ -51,7 +52,7 @@ window.onload = displayExTime;
 
             <!-- 8장과 9장의 회원제 게시판 프로젝트에서 사용할 링크 -->
             &nbsp;&nbsp;&nbsp; 
-            <a href="../08Board/List.jsp">게시판(페이징X)</a>
+            <a href="../8게시판/List.jsp">게시판(페이징X)</a>
             &nbsp;&nbsp;&nbsp; 
             <a href="../09PagingBoard/List.jsp">게시판(페이징O)</a>
         </td>

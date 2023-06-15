@@ -122,13 +122,12 @@ public class TableDao {
 	
 	
 	/**
-	 * 게시글 등록
+	 * 게시글 수정
 	 * @param table
 	 * @return int 등록처리된 건 수
 	 */
-	public int update(String num) {
+	public int update(Table table) {
 		int res = 0;
-		Table table = new Table();
 		String sql = "update board set title = ? , content = ? where num = ?";
 		
 		try(	Connection con = DBConnectionPool.getConnection();

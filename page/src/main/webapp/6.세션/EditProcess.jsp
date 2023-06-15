@@ -11,12 +11,19 @@
 </head>
 <body>
 	<%
+	request.setCharacterEncoding("utf-8");
+	
+	String num = request.getParameter("num");
+	String title = request.getParameter("title");
+	String content = request.getParameter("content");
+	Table t = new Table(num, title, content, "", "", "");
+	
 	TableDao tDao = new TableDao();	
-	Table table = new Table();
-	/* int res = tDao.update(request.getParameter("num")); 
+	int res = tDao.update(t); 
+	
 	if(res>0){
-		JSPFunction.alertLocation("👌 게시글 수정 완료 👌", "TableList.jsp", out);
-	}*/
+		JSPFunction.alertLocation("👌 게시글 수정 완료 👌", "View.jsp?num="+t.getNum(), out);
+	}
 	%>
 </body>
 </html>

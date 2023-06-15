@@ -21,8 +21,7 @@
 			session.setAttribute("userId", member.getId());
 			session.setAttribute("user", member);
 			
-			/* response.sendRedirect("LoginForm.jsp"); */
-			response.sendRedirect("TableList.jsp");
+			response.sendRedirect("LoginForm.jsp"); 
 			
 		} else {
 			// 로그인 실패 : LoginForm 페이지로 이동 후 오류 메세지 출력

@@ -12,6 +12,7 @@
 </head>
 <body>
 <jsp:include page="Link.jsp" />
+<%@ include file="../6.세션/IsLogin.jsp" %>
 	<h2>글쓰기(Write)</h2>
 	<form action="WriteProcess.jsp" method="POST">
 	<table class="tableWrite">

@@ -12,7 +12,7 @@
 	%>
 		<script>
 			alert('🍀 로그인 후 이용 가능 🍀');
-			location.href="LoginForm.jsp";
+			location.href="../6.세션/LoginForm.jsp";
 		</script>
 	<%
 		}

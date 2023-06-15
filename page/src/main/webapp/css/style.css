@@ -131,7 +131,7 @@ td.content {
 	  text-align: right;
 }
 .btnTable th, .btnTable td {
-	display: inline-block;
+	/* display: inline-block; */
 	padding: 10px;
 }
 .tableWrite td:first-child {
@@ -143,5 +143,15 @@ td.content {
 }
 .writeTable th {
 	vertical-align: top;
-} 
+}
+/* .listTable {
+	table-layout: fixed;
+}
+
+.listTable td, .listTable td a {
+	white-space:nowrap; text-overflow:ellipsis; overflow:hidden; width: 100%;
+}  */
+/* .listTable td:first-of-type, .listTable td:last-of-type {
+	padding:0;
+} */
 
