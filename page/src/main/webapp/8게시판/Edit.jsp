@@ -20,6 +20,7 @@
 		JSPFunction.alertBack("존재하지 않는 게시글 🤷", out);
 		return;
 	}
+	int pageNo = request.getParameter("pageNo") == null? 1 : Integer.parseInt(request.getParameter("pageNo"));
 %>
 </head>
 <body>
@@ -37,15 +38,14 @@
             <td>
                 <textarea name="content" style="width: 90%; height: 100px;"
                 ><%=b.getContent()%></textarea>
-                <input type="text" value="<%=b.getNum()%>" />
-                <input type="text" value="<%=nowTimeString%>" name="nowTime"/>
+                <input type="hidden" value="<%=b.getNum()%>" />
             </td>
         </tr>
         <tr>
             <td colspan="2" align="center">
                 <button type="submit">작성 완료</button>
                 <button type="reset">다시 입력</button>
-                <button type="button" onclick="location.href='List.jsp'">목록 보기</button>
+                <button type="button" onclick="location.href='List.jsp?pageNo=<%=pageNo%>'">목록 보기</button>
             </td>
         </tr>
     </table>

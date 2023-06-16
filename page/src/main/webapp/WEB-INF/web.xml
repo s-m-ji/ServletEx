@@ -39,7 +39,7 @@
   </context-param>
   
   
-  <!-- 에러페이지 처리하기 -->
+<!-- 에러페이지 처리하기 -->
   <error-page>
   	<error-code>404</error-code>
   	<location>/내장객체/Exception.jsp</location>
@@ -53,8 +53,8 @@
   	<location>/내장객체/Exception.jsp</location>
   </error-page>  
   
-  <!-- JNDI 데이터 소스 사용, (MI 20230612)    -->
-  <resource-ref>
+<!-- JNDI 데이터 소스 사용, (MI 20230612)    -->
+<resource-ref>
  <description>Oracle Datasource example</description>
  <res-ref-name>jdbc/myoracle</res-ref-name>
  <res-type>javax.sql.DataSource</res-type>
@@ -66,16 +66,20 @@
 	<session-timeout>20</session-timeout>
 </session-config>
 
-<!-- 게시판 페이징 처리 -->
-<context-param>
-        <param-name>POSTS_PER_PAGE</param-name>
-        <param-value>6</param-value>
-    </context-param>
-    <context-param>
-        <param-name>PAGES_PER_BLOCK</param-name>
-        <param-value>3</param-value>
-    </context-param>
-
+<!-- 한글 인코딩 필터 처리 -->
+<filter>
+    <filter-name>SetCharacterEncodingFilter</filter-name>
+    <filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
+    <init-param>
+    	<param-name>encoding</param-name>
+    	<param-value>UTF-8</param-value>
+    </init-param>
+</filter>
+<filter-mapping>
+    <filter-name>SetCharacterEncodingFilter</filter-name>
+    <!-- 모든 url을 처리하겠다는 것 -->
+    <url-pattern>/*</url-pattern>
+</filter-mapping>
 
 
 </web-app>

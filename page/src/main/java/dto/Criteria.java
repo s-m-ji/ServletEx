@@ -2,15 +2,15 @@ package dto;
 
 public class Criteria {
 
-	private String sField; // 검색조건
-	private String sWord; // 검색어
+	private String sField = ""; // 검색조건
+	private String sWord = ""; 	// 검색어
 	
 	int pageNo = 1; // 요청한 페이지 번호
 	int amount = 10; // 한 페이지 당 보여질 게시물 수
 	
 	int startNo = 1;
 	int endNo = 10;
-	
+
 	
 	public Criteria(int pageNo) {
 		if(pageNo > 0) {
@@ -25,19 +25,40 @@ public class Criteria {
 		this.amount = amount;
 	}
 
-	public Criteria(String sField, String sWord, int pageNo) {
+	public Criteria(String sField, String sWord, String pageNoStr, int amount) {
+		if(sWord != null) {
 		this.sField = sField;
 		this.sWord = sWord;
-		this.pageNo = pageNo;
-		
+		this.amount = amount;
+		}
+
+		if (pageNoStr != null) {
+			pageNo = Integer.parseInt(pageNoStr);
+			
+			if(pageNo > 0) {
+				/* this.pageNo = pageNo; */	
+				endNo = pageNo * amount;
+				startNo = pageNo * amount - (amount-1);
+			} else {
+			pageNo = 1;
+			}	
+	
+		}
+	}
+	
+	public Criteria(String sField, String sWord, int pageNo, int amount) {
+		this.sField = sField;
+		this.sWord = sWord;
+		this.amount = amount;
 		if(pageNo > 0) {
-			this.pageNo = pageNo;	
+			this.pageNo = pageNo;
 			endNo = pageNo * amount;
-			startNo = pageNo * amount - (amount-1);
+			startNo = pageNo * amount - (amount - 1);
 		}
 	}
 
-
+	
+	
 	public String getsField() {
 		return sField;
 	}

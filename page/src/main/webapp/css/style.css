@@ -12,6 +12,10 @@
   list-style: none;
 }
 
+h2{
+	text-align:center;
+}
+
 ul,ol,li {
 	margin : 0;
   	padding: 0;

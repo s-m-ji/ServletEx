@@ -1,3 +1,5 @@
+<%@page import="dto.PageDto"%>
+<%@page import="dto.Criteria"%>
 <%@page import="java.util.List"%>
 <%@page import="dao.TableDao"%>
 <%@page import="dto.Table"%>
@@ -9,34 +11,42 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="../css/style.css">
 <title>TableList.jsp</title>
+
 </head>
 <body>
 	<%
-	// 해당 페이지를 url로 들어가면 로그인하라고 나오도록 처리 ! 
 	String userId = (String)session.getAttribute("userId");
+	// 해당 페이지를 url로 들어가면 로그인하라고 나오도록 처리 ! 
+	/* 
 	if(userId == null){
 		response.sendRedirect("LoginForm.jsp");
 		return;
-	}
+	} */
+
+	// 게시판 DB 작업 - DAO 생성
+	TableDao tDao = new TableDao();
 		
+	// 검색 조건
 	String sField = request.getParameter("searchField");
 	String sWord = request.getParameter("searchWord");
-	sWord = sWord == null ? "" : sWord;
+	String pageNo = request.getParameter("pageNo");
 	
-	TableDao tDao = new TableDao();
-	List<Table> list = tDao.getList(sField, sWord);
-	int totalCnt = tDao.getTotalCnt(sField, sWord);
+	// 검색 조건을 객체로 생성
+	Criteria cr = new Criteria(sField, sWord, pageNo);
 	
-	// 검색어가 null이 아니면 검색 기능을 추가......
-	/* if(sWord != null){
-		out.print("분류 : " + sField + "<br>");
-		out.print("검색어 : " + sWord);
-	} */
+	// 리스트 조회 
+	/* List<Table> list = tDao.getList(cr.getsField(), cr.getsWord()); */
+	List<Table> list = tDao.getListPage(cr);
+
+	// 총 게시글 수 산정
+	int totalCnt = tDao.getTotalCnt(cr);
+	
 	%>
 	<jsp:include page="Link.jsp" />
 	<h2>목록 보기(List)</h2>
 	<!-- 검색폼 테이블 : 현재 페이지에서 검색할 용도-->
-	<form action="">
+	<form name="searchForm">
+<%-- 	<form action="PageNavi.jsp?pageNo=<%= cr.getPageNo()%>" name="searchForm"> --%>
 	<table>
 		<tr>
 			<td align="center">
@@ -46,7 +56,8 @@
 				<option value="id" <%= "id".equals(sField) ? "selected" : "" %>>작성자</option>
 				<option value="postdate" <%= "postdate".equals(sField) ? "selected" : "" %>>작성일</option>
 			</select>
-			<input type="text" name="searchWord" id="searchWord" value="<%= sWord%>">
+			<input type="text" name="searchWord" id="searchWord" value="<%= cr.getsWord()%>">
+			<input type="text" value="<%= cr.getPageNo()%>" name="pageNo">
 			<input type="submit" value="검색">
 			</td>
 		</tr>
@@ -108,5 +119,12 @@
 	<%
 	}
 	%>
+	<!-- 페이지네이션 블록 -->
+	<%
+		PageDto pDto = new PageDto(totalCnt, cr);
+	%>
+	<table>
+		<tr><td><%@ include file="PageNavi.jsp" %></td></tr>
+	</table>
 </body>
 </html>

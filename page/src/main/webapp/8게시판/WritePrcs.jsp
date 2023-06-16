@@ -12,8 +12,7 @@
 <body>
 <%@ include file="../6.세션/Link.jsp" %>
 <%@ include file="../6.세션/IsLogin.jsp" %>
-	<%  request.setCharacterEncoding("utf-8");
-	
+	<%  
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
 		String id = session.getAttribute("userId").toString();
@@ -25,8 +24,12 @@
 		
 		NewBoardDao dao = new NewBoardDao();
 		int res = dao.insert(b);
+		
+		/* b = dao.getPostOne(String.valueOf(b.getNum())); */
+		
 		if(res>0){
-			JSPFunction.alertLocation("게시물 등록 성공 🙆‍♀️", "List.jsp", out);
+			JSPFunction.alertLocation("게시물 등록 성공 🙆‍♀️", "View.jsp?num="+dao.latest(), out);
+/* 			JSPFunction.alertLocation("게시물 등록 성공 🙆‍♀️", "List.jsp", out); */
 		} else {
 			JSPFunction.alertBack("게시물 등록 실패 🙅‍♀️", out);
 		}

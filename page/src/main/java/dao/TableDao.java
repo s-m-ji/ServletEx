@@ -11,6 +11,7 @@ import java.util.Map;
 
 import common.ConnectionUtill;
 import common.DBConnectionPool;
+import dto.Criteria;
 import dto.Table;
 
 /**
@@ -32,7 +33,7 @@ public class TableDao {
 	public List<Table> getList(String sField, String sWord) {
 		List<Table> list = new ArrayList<Table>();
 		
-		String sql = "select * from board ";
+		String sql = "select * from board  ";
 			if(sWord != null && !"".equals(sWord)) {
 				sql += "where "	+ sField + " like '%" + sWord + "%' ";
 			}
@@ -64,16 +65,63 @@ public class TableDao {
 	}
 	
 	/**
+	 * 게시글 목록 조회 : 페이징처리
+	 * @param sField 제목 조건
+	 * @param sWord 내용 조건
+	 * @return List<Table>
+	 */
+	public List<Table> getListPage(Criteria cr) {
+		List<Table> list = new ArrayList<Table>();
+		
+		String sql = "select * from ( select b.*, rownum rn from ( select * from board ";
+		if(cr.getsWord() != null && !"".equals(cr.getsWord())) {
+			sql += "where "	+ cr.getsField() + " like '%" + cr.getsWord() + "%' ";
+		}
+		sql += "order by num desc ) b ) where rn between "
+				+ cr.getStartNo() + " and "	+ cr.getEndNo();
+		
+		try (	Connection con = DBConnectionPool.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery();
+				) {
+			while(rs.next()) {
+				
+				Table table = new Table();
+
+				table.setNum(rs.getString(1));
+				table.setTitle(rs.getString(2));
+				table.setContent(rs.getString(3));
+				table.setId(rs.getString(4));
+				table.setPostdate(rs.getString(5));
+				table.setVisitcount(rs.getString(6));
+				/*
+				 * table.setNum(rs.getString("num")); table.setTitle(rs.getString("title"));
+				 * table.setContent(rs.getString("content")); table.setId(rs.getString("id"));
+				 * table.setPostdate(rs.getString("postdate"));
+				 * table.setVisitcount(rs.getString("visitcount"));
+				 */				
+				
+				list.add(table);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
+	/**
 	 * 
 	 * @param sField
 	 * @param sWord
 	 * @return int 게시글 총 수 
 	 */
-	public int getTotalCnt(String sField, String sWord) {
+	public int getTotalCnt(Criteria cr) {
 		int totalCnt = 0;
 		String sql = "select count(*) from board ";
-			if(sWord != null && !"".equals(sWord)) {
-				sql += "where "	+ sField + " like '%" + sWord + "%' ";
+			if(cr.getsWord() != null && !"".equals(cr.getsWord())) {
+				sql += "where "	+ cr.getsField() + " like '%" + cr.getsWord() + "%' ";
 			}
 				sql += "order by num desc";
 		

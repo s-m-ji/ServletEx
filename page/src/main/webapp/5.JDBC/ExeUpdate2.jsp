@@ -22,7 +22,7 @@
 	if(session.getAttribute("member") != null){
        	Member m = (Member)session.getAttribute("member");
 	
-	Board board = new Board(0, title, content, m.getId(), "", 0);	
+	Board board = new Board(0, title, content, m.getId(), "", "", 0);	
 	BoardDao dao = new BoardDao();
 	
 	int res = dao.insert(board);

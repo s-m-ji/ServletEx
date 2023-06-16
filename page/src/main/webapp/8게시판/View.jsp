@@ -1,3 +1,4 @@
+<%@page import="dto.Criteria"%>
 <%@page import="common.JSPFunction"%>
 <%@page import="dto.Board"%>
 <%@page import="dao.NewBoardDao"%>
@@ -15,12 +16,18 @@
 <%@ include file="../6.세션/Link.jsp" %>
 <%
 	String num = request.getParameter("num");
+	String pageNo ="1";
+	if(request.getParameter("pageNo") != null){
+		pageNo = request.getParameter("pageNo");
+	}
 	NewBoardDao dao = new NewBoardDao();
 	dao.updateVsCnt(num);
 	Board b = dao.getPostOne(num);
 	if(num == null){
 		JSPFunction.alertBack("존재하지 않는 게시글 🤷", out);
-		return;
+		return; 
+		// 여기서 return을 하지 않으면 아래 코드가 전부 실행되면서 오류/예외를 발생시킴.
+		// 그걸 방지하고자 알림창 띄우고 스탑하는 것.
 	}
 %>
 <h2>회원제 게시판 - 상세 보기(View)</h2>
@@ -53,10 +60,10 @@
             	<%
             		if(userId != null && b.getId().equals(userId)){
             	%>
-                <button type="button" onclick="location.href='Edit.jsp?num=<%= b.getNum()%>'">수정하기</button>
+                <button type="button" onclick="location.href='Edit.jsp?num=<%= b.getNum()%>&pageNo=<%=pageNo%>'">수정하기</button>
                 <button type="button" onclick='delete();'>삭제하기</button> 
                 <% } %>
-                <button type="button" onclick="location.href='List.jsp?'">목록 보기</button>
+                <button type="button" onclick="location.href='List.jsp?pageNo=<%=pageNo%>'">목록 보기</button>
             </td>
         </tr>
     </table>
