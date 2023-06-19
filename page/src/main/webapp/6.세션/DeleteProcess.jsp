@@ -12,7 +12,6 @@
 <body>
 	<%
 	TableDao tDao = new TableDao();	
-	Table table = new Table();
 	int res = tDao.delete(request.getParameter("num"));
 	if(res>0){
 		JSPFunction.alertLocation("👌 게시글 삭제 완료 👌", "TableList.jsp", out);

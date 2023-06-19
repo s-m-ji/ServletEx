@@ -14,13 +14,13 @@ public class CookieManager {
 	// 국희를 생성 후 응답 객체에 담기
 	
 	public static void makeCookie
-		(HttpServletResponse respone, 
+		(HttpServletResponse response, 
 				String cName, String cValue, int cTime) {
 		
 		Cookie ck = new Cookie(cName, cValue);
 		ck.setPath("/");
 		ck.setMaxAge(cTime);
-		respone.addCookie(ck);
+		response.addCookie(ck);
 	}
 	
 	// 국희 이름을 받아서 값을 반환

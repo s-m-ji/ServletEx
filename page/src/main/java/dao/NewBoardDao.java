@@ -113,7 +113,8 @@ public class NewBoardDao {
 				b = new Board();
 				b.setNum(rs.getInt("num"));
 				b.setTitle(rs.getString("title"));
-				b.setContent(rs.getString("content"));
+				// 줄바꿈처리를 메소드에서 미리 처리해주었음
+				b.setContent(rs.getString("content").replace("\r\n", "<br>"));
 				b.setId(rs.getString("id"));
 				b.setPostdate(rs.getString("postdate"));
 				b.setEditdate(rs.getString("editdate"));
@@ -197,6 +198,24 @@ public class NewBoardDao {
 			e.printStackTrace();
 		}
 
+		return res;
+	}
+	
+	
+	public int delete(String num) {
+		int res = 0;
+		String sql = "delete board where num = ?";
+		
+		try(	Connection con = DBConnectionPool.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+			) {
+			pstmt.setString(1, num);
+			res = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		return res;
 	}
 	

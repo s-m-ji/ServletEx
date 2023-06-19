@@ -15,6 +15,7 @@
 <%
 
 	int num = Integer.parseInt(request.getParameter("num"));
+	int pageNo = request.getParameter("pageNo") == null? 1 : Integer.parseInt(request.getParameter("pageNo"));
 	String title = request.getParameter("title");
 	String content = request.getParameter("content");
 	String editdate = request.getParameter("nowTime");
@@ -23,7 +24,7 @@
 	NewBoardDao dao = new NewBoardDao();
 	int res = dao.update(b);
 	if(res>0){
-		JSPFunction.alertLocation("게시물 수정 성공 🙆", "View.jsp?num="+b.getNum(), out);
+		JSPFunction.alertLocation("게시물 수정 성공 🙆", "View.jsp?num="+b.getNum()+"&pageNo="+pageNo, out);
 	} else {
 		JSPFunction.alertBack("게시물 수정 실패 🙅‍♀", out);
 	}

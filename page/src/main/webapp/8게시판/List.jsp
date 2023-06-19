@@ -11,30 +11,8 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="../css/style.css">
+<script src="https://kit.fontawesome.com/bc0f5040fb.js" crossorigin="anonymous"></script>
 <title>회원제 게시판</title>
-<style>
-#scroll-btn {
-      cursor: pointer;
-      opacity: 0; 
-      width: 50px;
-      height: 50px;
-      color: #fff;
-      background-color: mediumslateblue;
-      position: fixed;
-      bottom: 5%;
-      right: 5%;
-      border-radius: 50%;
-      transition: opacity 0.5s, transform 0.5s;
-      z-index : 999;
-    }
-#scroll-btn.show {
-      opacity: 1;
-      transition: opacity 1s, transform 1s;
-    }
-  .test {
-  color: red;
-  }
-</style>
 <script>
 function changePageSize(value) {
     var searchForm = document.forms.searchForm;
@@ -150,7 +128,7 @@ function changePageSize(value) {
 <script>
 const scrollTop = function () {
     const scrollBtn = document.createElement("button");
-    scrollBtn.innerHTML = "Top";
+    scrollBtn.innerHTML = "<i class='fa-regular fa-circle-up'></i>";
     scrollBtn.setAttribute("id", "scroll-btn");
     document.body.appendChild(scrollBtn);
 
@@ -164,7 +142,7 @@ const scrollTop = function () {
     const scrollWindow = function () {
       if (window.scrollY != 0) {
         setTimeout(function () {
-          window.scrollTo(0, window.scrollY - 50);
+          window.scrollTo(0, window.scrollY - 100);
           scrollWindow();
         }, 10);
       }
@@ -176,10 +154,6 @@ scrollTop();
 const urlParams = new URL(location.href).searchParams;
 const pageNo = urlParams.get('pageNo');
 
-const btnTxt = document.querySelector('.pageNavi input');
-if(pageNo.equals(btnTxt.value)){
-	btnTxt.classList.add('test');
-}
 
 </script>	
 </body>

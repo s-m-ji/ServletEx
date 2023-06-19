@@ -25,7 +25,7 @@
 </head>
 <body>
 <h2>회원제 게시판 - 수정하기(Edit)</h2>
-<form action="EditPrcs.jsp?num=<%=b.getNum()%>" method="POST">
+<form action="EditPrcs.jsp?num=<%=b.getNum()%>&pageNo=<%=pageNo%>" method="POST">
     <table border="1" width="90%" >
         <tr>
             <td>제목</td>
