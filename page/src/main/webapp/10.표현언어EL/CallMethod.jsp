@@ -1,4 +1,5 @@
 <%@page import="el.MyELClass"%>
+<%@page import="el.MymyELClass"%>
 <%@page import="utils.CookieManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -13,7 +14,9 @@
 <h3>영역에 저장 후 메소드 호출</h3>
 	<%
 		MyELClass el = new MyELClass();
+		MymyELClass myel = new MymyELClass();
 		pageContext.setAttribute("el", el);
+		pageContext.setAttribute("myel", myel);
 		pageContext.setAttribute("response", response);
 	%>
 	990909-2345678 : ${ el.getGender("990909-2345678") } <br>
@@ -27,6 +30,14 @@
 	<hr>
 	<h3>메소드 호출하기</h3>
 	123-456 => ${ "123-456".replace("-", " 그리고 ") }
+	<hr>
+	990909-2345678 : ${ myel.getGender("990909-2345678") } <br>
+	990909-1234567 : ${ myel.getGender("990909-1345678") } <br>
+	990909-5678912 : ${ myel.getGender("990909-5345678") } <br>
+	"abc"는 숫자인가요? : ${ myel.isNumber("abc") } <br>
+	<p>4단까지 출력</p>
+	${ myel.gugu(4) }
+	<br><br><br><br><br>
 	<br><br><br><br><br>
 </body>
 </html>

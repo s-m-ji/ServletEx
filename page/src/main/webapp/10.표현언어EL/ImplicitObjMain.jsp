@@ -26,8 +26,8 @@
 		* 영역을 별도로 지정하지 않으면 기본적으로 page 영역에서 값을 찾게 됨당 
 		
 		- 페이지영역		:pageScope
-		- 영역			:pageScope
-		- 영역			:pageScope
+		- 리퀘스트영역		:requestScope
+		- 세션영역			:sessionScope
 		- 어플리케이션영역	:pageScope
 		
 		ex)  ${requestScope.saveVar}

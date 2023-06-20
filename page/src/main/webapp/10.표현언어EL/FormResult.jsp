@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,12 +32,19 @@
 				${ paramValues.inter[2] },
 				${ paramValues.inter[3] }
 		</li>
-		<%-- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+		<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 		<li>관심사항2 :
-        <c:forEach var="index" begin="0" end="${paramValues.inter.length - 1}">
+        <c:forEach var="index" begin="0" end="3" step="1">
             ${paramValues.inter[index]}
         </c:forEach>
-    	</li> --%>
+    	</li>
+    	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+		<li>관심사항3 :
+		<c:set var="length" value="${fn:length(paramValues.inter)}" />
+		<c:forEach var="index" begin="0" end="${length - 1}" step="1">
+		  ${paramValues.inter[index]}
+		</c:forEach>
+    	</li>
 	</ul>
 </body>
 </html>

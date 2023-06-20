@@ -54,13 +54,10 @@ window.onload = displayExTime;
             &nbsp;&nbsp;&nbsp; 
             <a href="../8게시판/List.jsp">게시판(페이징X)</a>
             &nbsp;&nbsp;&nbsp; 
-            <a href="../09PagingBoard/List.jsp">게시판(페이징O)</a>
-        </td>
-        
+            <a href="../09PagingBoard/List.jsp">게시판(페이징O)</a><br><br>
         <%
        		 if(userId != null){
         %>
-        <td>
             <span class="point" style="background: lavender;">ID: <%= userId %> </span></span><span><b> 세션 만료까지 남은 시간 : </b></span><span id="timer"></span>
         </td>
         <% } %>

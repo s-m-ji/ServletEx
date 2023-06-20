@@ -64,7 +64,7 @@
         </tr>
         <tr>
             <th>내용</th>
-            <td colspan="5" height="100"><%= b.getContent().replace("\r\n", "<br>")%></td> 
+            <td colspan="5" height="300"><%= b.getContent().replace("\r\n", "<br>")%></td> 
         </tr>
        	<%
        		if(userId != null && b.getId().equals(userId)){

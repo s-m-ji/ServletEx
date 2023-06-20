@@ -18,8 +18,8 @@
 
 </script>
 	<%
-    out.print("<input type='button' value='시작' onclick='go(1);'>");
     if (pDto.isPrev()) {
+    out.print("<input type='button' value='시작' onclick='go(1);'>");
         out.print("<input type='button' value='이전' onclick='go("+ (pDto.getStartNo()-1) +");'>");
     }
     
@@ -30,9 +30,9 @@
     
     if (pDto.isNext()) {
         out.print("<input type='button' value='다음' onclick='go("+ (pDto.getEndNo()+1) +");'>");
+    out.print("<input type='button' value='끝' onclick='go("+ (pDto.getRealEndNo()) +");'>");
     }
     
-    out.print("<input type='button' value='끝' onclick='go("+ (pDto.getRealEndNo()) +");'>");
 %>
 
 
