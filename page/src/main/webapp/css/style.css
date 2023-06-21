@@ -134,6 +134,7 @@ table {
 	padding: 10px 20px;
 	vertical-align: middle;
 	text-align:center;
+	word-break: break-all;
 }
 td.content {
 	height:300px;

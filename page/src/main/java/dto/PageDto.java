@@ -7,7 +7,7 @@ public class PageDto {
 	int realEndNo; 	// 게시물 끝번호
 	boolean prev, next; // 이전, 다음 버튼 (true: 화면에 표시)
 	
-	int block = 10; // 페이징 블록 버튼 개수
+	int block = 2; // 페이징 블록 버튼 개수
 	
 	int total;		// 총 게시글 수
 	Criteria cr;	// 페이지 번호, 페이지당 게시글 수
