@@ -108,6 +108,10 @@ input#searchWord{
 input.btnNavi.on {
 	background: linear-gradient(lavender, #a5a5ff);
 }
+
+textarea, input {
+	outline-color: #a5a5ff;
+} 
 .area {
   border: 1px solid #000;
   width: 600px;
@@ -135,6 +139,13 @@ table {
 	vertical-align: middle;
 	text-align:center;
 	word-break: break-all;
+}
+.writeTable td {
+	text-align:left;
+}
+.writeTable.listTable th {
+	text-align:left;
+	vertical-align: middle;
 }
 td.content {
 	height:300px;

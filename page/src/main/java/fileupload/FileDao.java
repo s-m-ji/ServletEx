@@ -29,11 +29,11 @@ public class FileDao {
 			pstmt.setString(5, file.getSfile());
 			
 			res = pstmt.executeUpdate();
-			System.out.println("파일 업로드 성공 ~");
+			/* System.out.println("파일 업로드 성공 ~"); */
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.err.println("파일 업로드 실패 !");
+			/* System.err.println("파일 업로드 실패 !"); */
 		}
 		return res;
 	}
@@ -68,11 +68,11 @@ public class FileDao {
 				file.setPostdate(rs.getString("postdate"));
 				list.add(file);
 			}
-			System.out.println("파일 목록 조회 성공 ~");
+			/* System.out.println("파일 목록 조회 성공 ~"); */
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.err.println("파일 목록 조회 실패 !");
+			/* System.err.println("파일 목록 조회 실패 !"); */
 		}
 		
 		return list;
@@ -91,7 +91,7 @@ public class FileDao {
 			}
 	
 		} catch (SQLException e) {
-			System.err.println("파일의 총 개수를 조회하던 중 예외 발생 🤦‍♀️");
+			/* System.err.println("파일의 총 개수를 조회하던 중 예외 발생 🤦‍♀️"); */
 			e.printStackTrace();
 		}
 

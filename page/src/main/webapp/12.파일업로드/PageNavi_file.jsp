@@ -17,8 +17,11 @@
 	}
 </script>
 
-<c:set var="pDto" value="<%=pDto%>"/>
-<c:set var="pageNo" value="<%=pageNo%>"/>
+<%-- <c:set var="pDto" value="<%=pDto%>"/>
+<c:set var="pageNo" value="<%=pageNo%>"/> --%>
+<c:set var="pageNo" value="${requestScope.pageNo}" />
+<c:set var="pDto" value="${requestScope.pDto}" />
+
 <c:if test="${pDto.prev}">
     <input type='button' value='시작' onclick='go(1);'>
     <input type='button' value='이전' onclick='go(${pDto.startNo}-1);'>

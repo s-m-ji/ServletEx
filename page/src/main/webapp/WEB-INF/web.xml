@@ -16,7 +16,6 @@
   	<param-value>web.xml에 저장한 초기화 매개변수</param-value>
   </context-param>
   
-  
   <!-- DB 접속정보 설정 정보를 외부 파일로 저장 -->
   <context-param>
   	<param-name>OracleDriver</param-name>
@@ -37,7 +36,6 @@
   	<param-name>OraclePw</param-name>
   	<param-value>1234</param-value>
   </context-param>
-  
   
 <!-- 에러페이지 처리하기 -->
   <error-page>
@@ -82,4 +80,79 @@
 </filter-mapping>
 
 
+<!--  서블릿 직접 등록 -->
+<servlet>
+	<servlet-name>HelloServlet</servlet-name>
+	<servlet-class>servlet.HelloServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+	<servlet-name>HelloServlet</servlet-name>
+	<url-pattern>/13.서블릿/HelloServlet.do</url-pattern>
+</servlet-mapping>
+
+<servlet>
+	<servlet-name>MemberAuth</servlet-name>
+	<servlet-class>servlet.MemberAuth</servlet-class>
+	<init-param>
+		<param-name>admin_id</param-name>
+		<param-value>test</param-value>
+	</init-param>
+</servlet>
+<servlet-mapping>
+	<servlet-name>MemberAuth</servlet-name>
+	<url-pattern>/13.서블릿/MemberAuth.mvc</url-pattern>
+</servlet-mapping>
+
+<servlet>
+	<servlet-name>MVCBoardList</servlet-name>
+	<servlet-class>model2.mvcboard.ListController</servlet-class>
+</servlet>
+<servlet-mapping>
+	<servlet-name>MVCBoardList</servlet-name>
+	<url-pattern>/mvcboard/list.do</url-pattern>
+</servlet-mapping>
+
+<servlet>
+	<servlet-name>MVCBoardWrite</servlet-name>
+	<servlet-class>model2.mvcboard.WriteController</servlet-class>
+</servlet>
+<servlet-mapping>
+	<servlet-name>MVCBoardWrite</servlet-name>
+	<url-pattern>/mvcboard/write.do</url-pattern>
+</servlet-mapping>
+
+<context-param>
+    <param-name>maxPostSize</param-name>
+    <param-value>1024000</param-value>
+</context-param>
+
+
 </web-app>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
