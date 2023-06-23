@@ -28,7 +28,7 @@
 </head>
 <body>
 	<h2>MVCBoardList - Write.jsp</h2>
-	<form action="/mvcboard/write.do" method="post" 
+	<form action="../mvcboard/write.do" method="post" 
 		enctype="multipart/form-data" onsubmit="return validateForm(this);">
 		<table border="1" class="listTable writeTable">
 		    <colgroup>
@@ -59,7 +59,7 @@
 			<td colspan="2">
 				<input type="submit" value="작성 완료">
 				<input type="reset" value="RESET">
-				<input type="button" value="목록 바로가기" onclick="location.href='/mvcboard/list.do'">
+				<input type="button" value="목록 바로가기" onclick="location.href='../mvcboard/list.do'">
 			</td></tr>	
 		</table>
 	</form>

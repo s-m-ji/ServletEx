@@ -17,13 +17,19 @@ public class ViewController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		String idx = (String)req.getAttribute("idx");
+		String idx = req.getParameter("idx");
 		
 		MVCBoardDao mDao = new MVCBoardDao();
 		MVCBoardDto mDto = mDao.getBoardView(idx);
 		
+		if(idx == null) {
+			System.err.println("---------- 존재하지 않는 게시글 🤷");
+			return; 
+		}
+		
 		req.setAttribute("mDto", mDto);
 		
-		req.getRequestDispatcher("/14MVCBoard/View.jsp").forward(req, resp);
+		
+		req.getRequestDispatcher("../14MVCBoard/View.jsp").forward(req, resp);
 	}
 }

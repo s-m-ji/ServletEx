@@ -106,7 +106,9 @@ public class NewBoardDao {
 				+ ", to_char(editdate, 'hh24:mi:ss'), to_char(editdate, 'yyyy-mm-dd') ) editdate"
 				+ "  from board where num = ? order by num desc";
 
-		try (Connection con = DBConnectionPool.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql);) {
+		try (Connection con = DBConnectionPool.getConnection(); 
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				) {
 			pstmt.setString(1, num);
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {

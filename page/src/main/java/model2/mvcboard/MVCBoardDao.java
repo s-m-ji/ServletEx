@@ -79,8 +79,10 @@ public class MVCBoardDao {
 		
 		try (	Connection con = ConnectionUtill.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(qry);
-				ResultSet rs = pstmt.executeQuery();
 				) {
+			pstmt.setString(1, idx);
+			ResultSet rs = pstmt.executeQuery();
+			
 			if(rs.next()) {
 				
 				mDto = new MVCBoardDto();
@@ -88,7 +90,7 @@ public class MVCBoardDao {
 				mDto.setIdx(rs.getString("idx"));
 				mDto.setName(rs.getString("name"));
 				mDto.setTitle(rs.getString("title"));
-				mDto.setContent(rs.getString("content"));
+				mDto.setContent(rs.getString("content").replace("\r\n", "<br>"));
 				mDto.setPostdate(rs.getString("postdate"));
 				mDto.setOfile(rs.getString("ofile"));
 				mDto.setSfile(rs.getString("sfile"));
@@ -96,10 +98,10 @@ public class MVCBoardDao {
 				mDto.setPass(rs.getString("pass"));
 				mDto.setVisitcount(rs.getInt("visitcount"));
 			}
-			/*
-			 * System.out.println("----- mDto : " + mDto);
-			 * System.out.println("----- mvcboard 상세 조회 성공 ^-^");
-			 */
+			
+			System.out.println("----- mDto : " + mDto);
+			System.out.println("----- mvcboard 상세 조회 성공 ^-^");
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.err.println("---------- mvcboard 상세 조회 실패!!!");
@@ -139,16 +141,85 @@ public class MVCBoardDao {
 	// 게시글 총 개수 반환
 	public int getTotalCnt(Criteria cr) {
 		int res = 0;
-		String sql = "SELECT COUNT(*) FROM mvcboard ORDER BY idx DESC";
+		String qry = "SELECT COUNT(*) FROM mvcboard";
+			if(cr.getsWord() != null && !"".equals(cr.getsWord())) {
+				qry += " WHERE "	+ cr.getsField()
+						+ " LIKE '%" + cr.getsWord() + "%'";
+			}
 		try (Connection con = ConnectionUtill.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql);
+				PreparedStatement pstmt = con.prepareStatement(qry);
 				ResultSet rs = pstmt.executeQuery();) {
 			if (rs.next()) {
 				res = rs.getInt(1);
 			}
 	
+		System.out.println("qry : " + qry);
 		} catch (SQLException e) {
-			/* System.err.println("파일의 총 개수를 조회하던 중 예외 발생 🤦‍♀️"); */
+			e.printStackTrace();
+			System.err.println("게시글 총 개수를 조회하던 중 예외 발생 🤦‍♀️");
+		}
+
+		return res;
+	}
+
+	// 비밀번호 검증 기능
+	public boolean confirmPassword(String pass, String idx) {
+		boolean res = false;
+		String qry = "SELECT * FROM mvcboard WHERE idx = ? AND pass = ? ";
+		try (	Connection con = ConnectionUtill.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(qry);
+				) {
+			pstmt.setString(1, idx);
+			pstmt.setString(2, pass);
+			
+			ResultSet rs = pstmt.executeQuery();
+			res = rs.next(); // 일치하는 게시글이 있다면 true를 반환
+			
+		} catch (SQLException e) {
+			System.err.println("비밀번호/게시글번호를 조회하던 중 예외 발생 🤦‍♀️");
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
+	// 게시글 삭제
+	public int deletePost(String idx) {
+		int res = 0;
+		String qry = "DELETE mvcboard WHERE idx = ?";
+		
+		try(	Connection con = DBConnectionPool.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(qry);
+			) {
+			pstmt.setString(1, idx);
+			res = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+	
+	
+	// 게시글 수정
+	public int updatePost(MVCBoardDto mDto) {
+		int res = 0;
+
+		String qry = "update mvcboard set name = ?, title = ?, content = ? where idx = ?";
+
+		try (Connection con = DBConnectionPool.getConnection(); 
+				PreparedStatement pstmt = con.prepareStatement(qry);
+				) {
+			
+			pstmt.setString(1, mDto.getName());
+			pstmt.setString(2, mDto.getTitle());
+			pstmt.setString(3, mDto.getContent());
+			pstmt.setString(4, mDto.getIdx());
+			res = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		}
 
