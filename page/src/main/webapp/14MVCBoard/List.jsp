@@ -25,34 +25,34 @@ function changePageSize(value) {
 		    	<td><b>현재 화면에서 ${list.size()} 개</b></td>
 		    	<td align="center">
 		            <select name="searchField"> 
-		                <option value="title" ${sField eq "title"? "selected" : "" }>제목</option>
-		                <option value="content" ${sWord eq "content"? "selected" : "" }>내용</option>
-		                <option value="sfile" ${"sfile".equals("")? "selected" : "" }>첨부파일명</option>
+		                <option value="title" ${ param.searchField eq "title" ? "selected" : "" }>제목</option>
+		                <option value="name" ${ param.searchField eq "name" ? "selected" : "" }>작성자</option>
+		                <option value="postdate" ${ sField eq "postdate"? "selected" : "" }>작성일</option>
 		            </select>
-		            <input type="text" name="searchWord" value="${sWord == null? '' : sWord}"/>
+		            <input type="text" name="searchWord" value="${param.searchWord }"/>
 		            <input type="submit" value="검색하기" />
-		            <!--<input type="text" name="pageNo">-->
  		            <input type="text" name="pageNo" value="1" >
-<%-- 		            <input type="hidden" name="pageNo" value="${pageNo}" > --%>
+		            <%--<input type="hidden" name="pageNo"> %-->
+					<%--<input type="hidden" name="pageNo" value="${pageNo}" > --%>
 		            
 		            <select name="searchAmount" onchange="changePageSize(this.value)">
-		            	<option value="1" ${ sAmount eq 1 ? "selected" : "" }>1개씩 보기</option>
 		            	<option value="5" ${ sAmount eq 5 ? "selected" : "" }>5개씩 보기</option>
 		            	<option value="10" ${ sAmount eq 10 ? "selected" : "" }>10개씩 보기</option>
+		            	<option value="50" ${ sAmount eq 50 ? "selected" : "" }>50개씩 보기</option>
 		            </select>
 		        </td>
 		    </tr>   
 	    </table>
     </form>
-    <!-- 목록 조회 -->
+    <!-- 게시글 목록 -->
 	<table border="1" class="listTable">
 		<tr>
 			<th>번호</th>		
-			<th>제목</th>		
-			<th>내용</th>		
+			<th width="40%">제목</th>		
+			<th>작성자</th>		
 			<th>작성일</th>		
 			<th>조회수</th>		
-			<th>첨부</th>		
+			<th>첨부파일</th>		
 		</tr>
 	<c:choose>
 		<c:when test="${empty list}">
@@ -63,10 +63,10 @@ function changePageSize(value) {
 				<tr>
 					<td>${mList.idx}</td>
 					<td><a href="../mvcboard/view.do?idx=${mList.idx}">${mList.title}</a></td>
-					<td>${mList.content}</td>
+					<td>${mList.name}</td>
 					<td>${mList.postdate}</td>
 					<td>${mList.visitcount}</td>
-					<td>${mList.sfile}</td>
+					<td>${mList.sfile != null? "있음 📥" : ""}</td>
 				</tr>
 			</c:forEach>
 		</c:otherwise>
@@ -76,7 +76,10 @@ function changePageSize(value) {
 	<table>
 		<tr><td><button onclick="location=href='../mvcboard/write.do'">글쓰기</button></td></tr>
 	</table>
-	<%@ include file="../12.파일업로드/PageNavi_file.jsp" %>
+	<!-- 페이지네이션 블록 -->
+	<table>
+		<tr><td><%@ include file="../12.파일업로드/PageNavi_file.jsp" %></td></tr>
+	</table>
 	<%--
 		include 태그로 모듈을 가져오게되면 저장된 Dto 값을 가져올 수 없기에
 	 <jsp:include page="../12.파일업로드/PageNavi_file.jsp">

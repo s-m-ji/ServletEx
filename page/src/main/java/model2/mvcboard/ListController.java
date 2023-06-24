@@ -16,10 +16,10 @@ public class ListController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		String pageNo = req.getParameter("pageNo");
-		String sAmount = req.getParameter("searchAmount");
 		String sField = req.getParameter("searchField"); 
 		String sWord =	req.getParameter("searchWord"); 
+		String pageNo = req.getParameter("pageNo");
+		String sAmount = req.getParameter("searchAmount");
 		
 		Criteria cr = new Criteria(sField, sWord, pageNo, sAmount);
 		MVCBoardDao mDao = new MVCBoardDao();		
@@ -27,12 +27,8 @@ public class ListController extends HttpServlet{
 		int total =	mDao.getTotalCnt(cr);
 		PageDto pDto = new PageDto(total, cr);
 		
-		req.setAttribute("sField", sField);
-		req.setAttribute("sWord", sWord);
-		req.setAttribute("cr", cr);
 		req.setAttribute("pageNo", cr.getPageNo());
-		req.setAttribute("sAmount",	cr.getAmount());
-		req.setAttribute("mDao", mDao);
+		req.setAttribute("sAmount",	cr.getAmount());		
 		req.setAttribute("list", list);
 		req.setAttribute("total", total);
 		req.setAttribute("pDto", pDto);	

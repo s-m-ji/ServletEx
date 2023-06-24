@@ -11,14 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/mvcboard/view.do")
 public class ViewController extends HttpServlet {
 
-	public ViewController() {
-	}
-
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		String idx = req.getParameter("idx");
-		
 		MVCBoardDao mDao = new MVCBoardDao();
 		MVCBoardDto mDto = mDao.getBoardView(idx);
 		
@@ -28,7 +24,6 @@ public class ViewController extends HttpServlet {
 		}
 		
 		req.setAttribute("mDto", mDto);
-		
 		
 		req.getRequestDispatcher("../14MVCBoard/View.jsp").forward(req, resp);
 	}

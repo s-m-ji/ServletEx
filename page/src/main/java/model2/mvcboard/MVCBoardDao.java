@@ -14,10 +14,6 @@ import dto.Criteria;
 
 public class MVCBoardDao {
 
-	public MVCBoardDao() {
-		// TODO Auto-generated constructor stub
-	}
-	
 	// 게시글 목록 조회 - 페이징 처리 (o)
 	public List<MVCBoardDto> getBoardList(Criteria cr){
 		List<MVCBoardDto> list = new ArrayList<MVCBoardDto>();
@@ -26,9 +22,9 @@ public class MVCBoardDao {
 				+ " SELECT ROWNUM rn, t.* FROM (" 
 				+ " SELECT idx, name, title, content, postdate, ofile, sfile, downcount, pass, visitcount "
 				+ " FROM mvcboard";
-		if (cr.getsWord() != null && !"".equals(cr.getsWord())) {
-			qry += " WHERE " + cr.getsField() + " LIKE '%" + cr.getsWord() + "%'";
-		}
+			if (cr.getsWord() != null && !"".equals(cr.getsWord())) {
+				qry += " WHERE " + cr.getsField() + " LIKE '%" + cr.getsWord() + "%'";
+			}
 			qry += " ORDER BY idx DESC )"
 				+ " t )"
 				+ " WHERE rn BETWEEN " 
@@ -39,29 +35,24 @@ public class MVCBoardDao {
 				ResultSet rs = pstmt.executeQuery();
 				) {
 			while(rs.next()) {
-				
-				MVCBoardDto mDto = new MVCBoardDto();
-				
-				mDto.setIdx(rs.getString("idx"));
-				mDto.setName(rs.getString("name"));
-				mDto.setTitle(rs.getString("title"));
-				mDto.setContent(rs.getString("content"));
-				mDto.setPostdate(rs.getString("postdate"));
-				mDto.setOfile(rs.getString("ofile"));
-				mDto.setSfile(rs.getString("sfile"));
-				mDto.setDowncount(rs.getInt("downcount"));
-				mDto.setPass(rs.getString("pass"));
-				mDto.setVisitcount(rs.getInt("visitcount"));
+				MVCBoardDto mDto = new MVCBoardDto(
+										rs.getString("idx")
+										, rs.getString("name")
+										, rs.getString("title")
+										, rs.getString("content")
+										, rs.getString("postdate")
+										, rs.getString("ofile")
+										, rs.getString("sfile")
+										, rs.getInt("downcount")
+										, rs.getString("pass")
+										, rs.getInt("visitcount")
+									);
 				
 				list.add(mDto);
 			}
-			/*
-			 * System.out.println("----- list : " + list);
-			 * System.out.println("----- mvcboard 목록 조회 성공 ^-^");
-			 */
 		} catch (SQLException e) {
+			System.err.println("========== mvcboard 목록 조회하던 중 예외 발생 🤦‍♀️");
 			e.printStackTrace();
-			System.err.println("---------- mvcboard 목록 조회 실패!!!");
 		}
 		
 		return list;
@@ -85,26 +76,36 @@ public class MVCBoardDao {
 			
 			if(rs.next()) {
 				
-				mDto = new MVCBoardDto();
+				/*
+				 * mDto = new MVCBoardDto();
+				 * 
+				 * mDto.setIdx(rs.getString("idx")); mDto.setName(rs.getString("name"));
+				 * mDto.setTitle(rs.getString("title"));
+				 * mDto.setContent(rs.getString("content").replace("\r\n", "<br>"));
+				 * mDto.setPostdate(rs.getString("postdate"));
+				 * mDto.setOfile(rs.getString("ofile")); mDto.setSfile(rs.getString("sfile"));
+				 * mDto.setDowncount(rs.getInt("downcount"));
+				 * mDto.setPass(rs.getString("pass"));
+				 * mDto.setVisitcount(rs.getInt("visitcount"));
+				 */
 				
-				mDto.setIdx(rs.getString("idx"));
-				mDto.setName(rs.getString("name"));
-				mDto.setTitle(rs.getString("title"));
-				mDto.setContent(rs.getString("content").replace("\r\n", "<br>"));
-				mDto.setPostdate(rs.getString("postdate"));
-				mDto.setOfile(rs.getString("ofile"));
-				mDto.setSfile(rs.getString("sfile"));
-				mDto.setDowncount(rs.getInt("downcount"));
-				mDto.setPass(rs.getString("pass"));
-				mDto.setVisitcount(rs.getInt("visitcount"));
+				mDto = new MVCBoardDto(
+						rs.getString("idx")
+						, rs.getString("name")
+						, rs.getString("title")
+						, rs.getString("content").replace("\r\n", "<br>")
+						, rs.getString("postdate")
+						, rs.getString("ofile")
+						, rs.getString("sfile")
+						, rs.getInt("downcount")
+						, rs.getString("pass")
+						, rs.getInt("visitcount")
+					);
 			}
 			
-			System.out.println("----- mDto : " + mDto);
-			System.out.println("----- mvcboard 상세 조회 성공 ^-^");
-			
 		} catch (SQLException e) {
+			System.err.println("========== mvcboard 상세 조회하던 중 예외 발생 🤦‍♀️");
 			e.printStackTrace();
-			System.err.println("---------- mvcboard 상세 조회 실패!!!");
 		}
 		
 		return mDto;
@@ -112,7 +113,7 @@ public class MVCBoardDao {
 
 	
 	// 게시글 추가 기능
-	public int insert(MVCBoardDto mDto) {
+	public int insertPost(MVCBoardDto mDto) {
 		int res = 0;
 
 		String qry = "INSERT INTO mvcboard VALUES ("
@@ -130,8 +131,8 @@ public class MVCBoardDao {
 			res = pstmt.executeUpdate();
 
 		} catch (SQLException e) {
+			System.err.println("========== mvcboard 게시글 작성하던 중 예외 발생 🤦‍♀️");
 			e.printStackTrace();
-			System.err.println("---------- mvcboard 게시글 작성 실패!!!");
 		}
 
 		return res;
@@ -153,10 +154,9 @@ public class MVCBoardDao {
 				res = rs.getInt(1);
 			}
 	
-		System.out.println("qry : " + qry);
 		} catch (SQLException e) {
+			System.err.println("========== 게시글 총 개수를 조회하던 중 예외 발생 🤦‍♀️");
 			e.printStackTrace();
-			System.err.println("게시글 총 개수를 조회하던 중 예외 발생 🤦‍♀️");
 		}
 
 		return res;
@@ -176,7 +176,7 @@ public class MVCBoardDao {
 			res = rs.next(); // 일치하는 게시글이 있다면 true를 반환
 			
 		} catch (SQLException e) {
-			System.err.println("비밀번호/게시글번호를 조회하던 중 예외 발생 🤦‍♀️");
+			System.err.println("========== 비밀번호/게시글번호를 조회하던 중 예외 발생 🤦‍♀️");
 			e.printStackTrace();
 		}
 		return res;
@@ -194,6 +194,7 @@ public class MVCBoardDao {
 			res = pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
+			System.err.println("========== 게시글 삭제 중 예외 발생 🤦‍♀️");
 			e.printStackTrace();
 		}
 		
@@ -205,7 +206,7 @@ public class MVCBoardDao {
 	public int updatePost(MVCBoardDto mDto) {
 		int res = 0;
 
-		String qry = "update mvcboard set name = ?, title = ?, content = ? where idx = ?";
+		String qry = "update mvcboard set name = ?, title = ?, content = ?, ofile = ?, sfile = ? where idx = ?";
 
 		try (Connection con = DBConnectionPool.getConnection(); 
 				PreparedStatement pstmt = con.prepareStatement(qry);
@@ -214,12 +215,16 @@ public class MVCBoardDao {
 			pstmt.setString(1, mDto.getName());
 			pstmt.setString(2, mDto.getTitle());
 			pstmt.setString(3, mDto.getContent());
-			pstmt.setString(4, mDto.getIdx());
+			pstmt.setString(4, mDto.getOfile());
+			pstmt.setString(5, mDto.getSfile());
+			pstmt.setString(6, mDto.getIdx());
 			res = pstmt.executeUpdate();
 
-		} catch (SQLException e) {
-			e.printStackTrace();
 		} catch (IllegalArgumentException e) {
+			System.err.println("========== 게시글 수정 중 예외 발생 IllegalArgumentException 🤦‍♀️");
+			e.printStackTrace();
+		} catch (SQLException e) {
+			System.err.println("========== 게시글 수정 중 예외 발생 SQLException 🤦‍♀️");
 			e.printStackTrace();
 		}
 

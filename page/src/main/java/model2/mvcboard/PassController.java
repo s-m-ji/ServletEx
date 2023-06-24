@@ -7,6 +7,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import common.JSPFunction;
 
@@ -25,13 +27,17 @@ public class PassController extends HttpServlet {
 		String mode = req.getParameter("mode");
 		String idx = req.getParameter("idx");
 		String pass = req.getParameter("pass");
+		//req.setAttribute("idx", idx);
+		//req.setAttribute("pass", pass);
 		
 		MVCBoardDao mDao = new MVCBoardDao();
 		boolean confirmed = mDao.confirmPassword(pass, idx);
 		if(confirmed) {
 			System.out.println("비밀번호 검증 성공 ~ ");
 			if("edit".equals(mode)) {
-				//req.getRequestDispatcher("../mvcboard/edit.do").forward(req, resp);
+				 // req.getRequestDispatcher("../mvcboard/edit.do").forward(req, resp);
+				HttpSession session = req.getSession();
+			    session.setAttribute("pass", pass);
 				resp.sendRedirect("../mvcboard/edit.do?idx="+idx); // 파라미터 값이 idx만 필요해서 간단히 리다이렉트함
 			} else if("delete".equals(mode)) {
 				int res = mDao.deletePost(idx);

@@ -3,14 +3,13 @@ package dto;
 public class Criteria {
 
 	private String sField_test = ""; // 검색조건
-	// private String sWord = ""; 	// 검색어
-	private String sWord; 	// 검색어
+	private String sWord = ""; 	// 검색어
 	
 	int pageNo = 1; // 요청한 페이지 번호
 	int amount = 10; // 한 페이지 당 보여질 게시물 수
 	
 	int startNo = 1;
-	int endNo = 2;
+	int endNo = 10;
 
 	
 	public Criteria(int pageNo) {
@@ -28,28 +27,23 @@ public class Criteria {
 
 	public Criteria(String sField, String sWord, String pageNoStr, String amountStr) {
 		if(sWord != null) {
-			// TODO "" 빈 문자열을 여기서 걸러버리면 기본 리스트 조회가 안되려나 ?
-		this.sField_test = sField;
-		// this.sWord = sWord;
-		} else {
-		
+			this.sField_test = sField;
 			this.sWord = sWord;
-		}
+		} 
 
-		// 
-		if (pageNoStr != null 
+		if (pageNoStr != null && !pageNoStr.equals("")
 				// TODO 왜 !"" 라고 해야하는지 ?? -> 안 그럼 페이지 이동이 불가 ! 항상 1쪽만 찍힘 ***OK
 				// TODO "".equals(pageNoStr) 이 처리는 하지 않아도 되는지? -> ""이면 빈 문자열을 parseInt 할 수 없음 ***OK
 				// !"".equals(pageNoStr) 이거 아예 없으면 ? -> 검색 이후에 항상 1쪽을 보여주기 위해서 현재 input value="1"로 설정해두엇음 그럼 ok ***OK
-				&& amountStr != null) {
+				&& amountStr != null && !amountStr.equals("")) {
 			pageNo = Integer.parseInt(pageNoStr);
 			amount = Integer.parseInt(amountStr);
 			if(pageNo > 0) {
 				endNo = pageNo * amount;
 				startNo = pageNo * amount - (amount-1);
 			} else {
-			pageNo = 1;
-			amount = 2;
+				pageNo = 1;
+				amount = 10;
 			}	
 	
 		}
