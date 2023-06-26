@@ -1,3 +1,5 @@
+<%@page import="dto.PageDto"%>
+<%@page import="dto.Criteria"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="fileupload.FileDto"%>
 <%@page import="java.util.List"%>
@@ -21,7 +23,7 @@ function changePageSize(value) {
 </head>
 <body>
 <%	
-	/*  String sField = request.getParameter("searchField");	
+	 String sField = request.getParameter("searchField");	
 	 String sWord = request.getParameter("searchWord");	
 	int pageNo = request.getParameter("pageNo") == null? 1 : Integer.parseInt(request.getParameter("pageNo"));
 	int sAmount = request.getParameter("searchAmount") == null? 2 : Integer.parseInt(request.getParameter("searchAmount"));
@@ -30,12 +32,23 @@ function changePageSize(value) {
 	FileDao fDao = new FileDao();
 	List<FileDto> list = fDao.getFileList(cr);	
 	int total = fDao.getTotalCnt(cr);
-	PageDto pDto = new PageDto(total, cr); */
+	PageDto pDto = new PageDto(total, cr);
 %>
 	<h3>파일에 등록된 파일 목록 보기</h3>
 	<a href="FileUpload.jsp" target="_blank">파일 등록하기</a><br><br>
-	<%-- <c:set var="list" value="<%=list%>" />
-	<c:set var="total" value="<%=total%>" /> --%>
+	<c:set var="list" value="<%=list%>" />
+	<c:set var="total" value="<%=total%>" />
+
+	<%-- <c:set var="sField" value="${requestScope.sField}" />
+	<c:set var="sWord" value="${requestScope.sWord}" />
+	<c:set var="pageNo" value="${requestScope.pageNo}" />
+	<c:set var="sAmount" value="${requestScope.sAmount}" />
+	
+	<c:set var="cr" value="${requestScope.cr}" />
+	<c:set var="fDao" value="${requestScope.fDao}" />
+	<c:set var="list" value="${requestScope.list}" />
+	<c:set var="total" value="${requestScope.total}" />
+	<c:set var="pDto" value="${requestScope.pDto}" /> --%>
 	<!-- 검색폼 --> 
     <form name="searchForm">  
     <table border="1" width="90%">
@@ -44,19 +57,20 @@ function changePageSize(value) {
 <%--     	<td>파일 총 ${list.size()} 개</td> --%>
     	<td align="center">
             <select name="searchField"> 
-                <option value="sfile" ${"sfile".equals(sField)? "selected" : "" }>저장된 파일명</option>
-                <option value="cate" ${"cate".equals(sField)? "selected" : "" }>카테고리</option> 
-                <option value="title" ${"title".equals(cr.getsField())? "selected" : "" }>제목</option>
-                <option value="name" ${"name".equals(cr.getsField())? "selected" : "" }>작성자</option>
-                <option value="postdate" ${"postdate".equals(cr.getsField())? "selected" : "" }>작성일</option>
+                <option value="sfile" <%="sfile".equals(sField)? "selected" : "" %>>저장된 파일명</option>
+                <option value="cate" <%="cate".equals(sField)? "selected" : "" %>>카테고리</option> 
+                <option value="title" <%="title".equals(cr.getsField())? "selected" : "" %>>제목</option>
+                <option value="name" <%="name".equals(cr.getsField())? "selected" : "" %>>작성자</option>
+                <option value="postdate" <%="postdate".equals(cr.getsField())? "selected" : "" %>>작성일</option>
             </select>
-            <input type="text" name="searchWord" value="${sWord == null? "" : sWord}"/>
-            <input type="hidden" name="pageNo" value="${cr.getPageNo()}" >
+            <input type="text" name="searchWord" value="<%= sWord == null? "" : sWord%>"/>
+            <input type="hidden" name="pageNo" value="<%= cr.getPageNo()%>" >
             <input type="submit" value="검색하기" />
+        <td align="center">
             <select name="searchAmount" onchange="changePageSize(this.value)">
-            	<option value="1" ${ sAmount == 1 ? "selected" : "" }>1개씩 보기</option>
-            	<option value="5" ${ sAmount == 5 ? "selected" : "" }>5개씩 보기</option>
-            	<option value="10" ${ sAmount == 10 ? "selected" : "" }>10개씩 보기</option>
+            	<option value="1" <%= sAmount == 1 ? "selected" : "" %>>1개씩 보기</option>
+            	<option value="5" <%= sAmount == 5 ? "selected" : "" %>>5개씩 보기</option>
+            	<option value="10" <%= sAmount == 10 ? "selected" : "" %>>10개씩 보기</option>
             </select>
         </td>
     </tr>   

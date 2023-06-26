@@ -1,6 +1,6 @@
 <%@page import="el.MyELClass"%>
 <%@page import="el.MymyELClass"%>
-<%@page import="utils.CookieManager"%>
+<%@page import="com.utils.CookieManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -29,7 +29,7 @@
 	ELCookie : ${ cookie.ELCookie.value }
 	<hr>
 	<h3>메소드 호출하기</h3>
-	123-456 => ${ "123-456".replace("-", " 그리고 ") }
+	123-456 => ${ "123-456".replace('-', " 그리고 ") }
 	<hr>
 	990909-2345678 : ${ myel.getGender("990909-2345678") } <br>
 	990909-1234567 : ${ myel.getGender("990909-1345678") } <br>

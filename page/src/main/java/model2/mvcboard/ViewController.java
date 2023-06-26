@@ -16,6 +16,7 @@ public class ViewController extends HttpServlet {
 		
 		String idx = req.getParameter("idx");
 		MVCBoardDao mDao = new MVCBoardDao();
+		mDao.updateVisitCnt(idx);
 		MVCBoardDto mDto = mDao.getBoardView(idx);
 		
 		if(idx == null) {

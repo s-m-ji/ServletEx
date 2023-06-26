@@ -116,8 +116,12 @@ public class MVCBoardDao {
 	public int insertPost(MVCBoardDto mDto) {
 		int res = 0;
 
-		String qry = "INSERT INTO mvcboard VALUES ("
-				+ "seq_mvcboard_num.nextval, ?, ?, ?, sysdate, ?, ?, 0, ?, 0)";
+		//String qry = "INSERT INTO mvcboard VALUES ("
+		//		+ "seq_mvcboard_num.nextval, ?, ?, ?, sysdate, ?, ?, 0, ?, 0)";
+		// 디폴트 값을 넣어야되는거면 굳이 전체 컬럼으로 값을 넣지 않고, 필요한 부분만 작성하면 되겠당.
+		// -> 0 인 컬럼이 뭔지 테이블을 한번 더 찾아봐야하기때문에
+		String qry = "INSERT INTO mvcboard (idx, name, title, content, ofile, sfile, pass) "
+				+ "VALUES (seq_mvcboard_num.nextval, ?, ?, ?, ?, ?, ?)";
 		try (Connection con = DBConnectionPool.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(qry);
 				) {
@@ -230,4 +234,42 @@ public class MVCBoardDao {
 
 		return res;
 	}
+
+
+	// 게시글 조회수 증가
+	public void updateVisitCnt(String idx) {
+		String qry = "UPDATE mvcboard set visitcount = visitcount + 1 WHERE idx = ? ";
+		try (Connection con = DBConnectionPool.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(qry);
+				) {
+			pstmt.setString(1, idx);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

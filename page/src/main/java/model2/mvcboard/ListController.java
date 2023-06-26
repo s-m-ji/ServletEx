@@ -22,7 +22,7 @@ public class ListController extends HttpServlet{
 		String sAmount = req.getParameter("searchAmount");
 		
 		Criteria cr = new Criteria(sField, sWord, pageNo, sAmount);
-		MVCBoardDao mDao = new MVCBoardDao();		
+		MVCBoardDao mDao = new MVCBoardDao();
 		List<MVCBoardDto> list = mDao.getBoardList(cr);
 		int total =	mDao.getTotalCnt(cr);
 		PageDto pDto = new PageDto(total, cr);

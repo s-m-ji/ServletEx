@@ -47,7 +47,7 @@
 				<th>내용</th>	<td><textarea name="content" cols="100" rows="10" style="resize: none;" ></textarea></td>
 			</tr>	
 			<tr>
-				<th>파일</th>	<td><input type="file" name="file" multiple="multiple"></td>
+				<th>첨부 파일</th>	<td><input type="file" name="file" multiple="multiple"></td>
 			</tr>	
 			<tr>
 				<th>비밀번호</th><td><input type="text" name="pass" size="10"></td>

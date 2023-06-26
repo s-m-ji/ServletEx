@@ -27,7 +27,12 @@
 			<th>제목</th>	<td colspan="4" >${mDto.title}</td>
 		</tr>	
 		<tr>
-			<th>내용</th>	<td colspan="4" height="300">${mDto.content}</td>
+			<th>내용</th>	<td colspan="4" height="300">
+			${mDto.content}<br>
+			<!-- TODO 파일을 여러개 올렸을 때 받아올 수 있도록 -->
+			<c:forEach items=""></c:forEach>
+			<img alt="이미지" src="../upload/${mDto.sfile}" style="height:300px;">
+			</td>
 		</tr>
 		<tr>	
 			<th>첨부파일</th>		

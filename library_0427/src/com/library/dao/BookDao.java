@@ -63,9 +63,6 @@ public class BookDao {
 		String sql = String.format
 	("insert into book values (SEQ_BOOK_NO.NEXTVAL, '%s', '%s', '%s')"
 				, book.getTitle(), book.getRentyn(), book.getAuthor());
-
-		// 실행될 쿼리를 출력해봅니다
-		//System.out.println(sql);
 		
 		try (Connection conn = ConnectionUtil.getConnection();
 				Statement stmt = conn.createStatement();	){

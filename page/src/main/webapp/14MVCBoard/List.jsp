@@ -66,7 +66,12 @@ function changePageSize(value) {
 					<td>${mList.name}</td>
 					<td>${mList.postdate}</td>
 					<td>${mList.visitcount}</td>
-					<td>${mList.sfile != null? "있음 📥" : ""}</td>
+					<%-- <td>${mList.ofile != null? "있음 📥" : ""}</td> --%>
+					<td>
+						<c:if test="${not empty mList.ofile}">
+							<a href="../mvcboard/download.do?ofile=${mList.ofile}&sfile=${mList.sfile}" download="${mList.ofile}">있음 📥</a>
+						</c:if>
+					</td> 
 				</tr>
 			</c:forEach>
 		</c:otherwise>
