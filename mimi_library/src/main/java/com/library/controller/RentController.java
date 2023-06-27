@@ -17,7 +17,7 @@ public class RentController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("------------ idx : " + request.getParameter("idx"));
 		BookService bs = new BookService();	
-		bs.rentBook(Integer.parseInt(request.getParameter("idx")));
+		// bs.rentBook(Integer.parseInt(request.getParameter("idx")));
 		JSPFunction.alertLocation("오예 대출 성공쓰 ~ ", "../book/list.book", response);
 	}
 

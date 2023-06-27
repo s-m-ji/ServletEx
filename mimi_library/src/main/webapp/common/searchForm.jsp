@@ -14,21 +14,26 @@ function changePageSize(value) {
 </script>
 </head>
 <body>
-    <form name="searchForm">  
+<!-- 폼 액션이 없으면 자기자신의 페이지를 가져옴 ! -->
+<!-- 그래서 action을 지정해주거나  -->
+    <form name="searchForm" method="get">  
 	    <table border="1">
 		    <tr>
-		    	<td><b>게시글 총 ${total} 개</b></td>
-		    	<td><b>현재 화면에서 ${list.size()} 개</b></td>
+		    	<td><b>게시글 총 ${map.totalCnt} 개</b></td>
+		    	<td><b>현재 화면에서 ${map.list.size()} 개</b></td>
 		    	<td align="center">
 		            <select name="searchField"> 
-		                <option value="title" ${ param.searchField eq "title" ? "selected" : "" }>제목</option>
-		                <option value="name" ${ param.searchField eq "name" ? "selected" : "" }>작성자</option>
-		                <option value="postdate" ${ sField eq "postdate"? "selected" : "" }>작성일</option>
+		                <option value="title" ${ param.searchField eq "title" ? "selected" : "" }>도서명</option>
+		                <option value="writer" ${ param.searchField eq "writer" ? "selected" : "" }>작가명</option>
+		                <option value="publisher" ${ sField eq "publisher"? "selected" : "" }>출판사명</option>
 		            </select>
 		            
 		            <input type="text" name="searchWord" value="${param.searchWord }"/>
 		            <input type="submit" value="검색하기" />
+		            
+		            <!-- 페이지 번호, 삭제할 글 번호 -->
  		            <input type="text" name="pageNo" value="1" >
+ 		            <input type="text" name="delNo" >
 		            
 		            <select name="searchAmount" onchange="changePageSize(this.value)">
 		            	<option value="5" ${ sAmount eq 5 ? "selected" : "" }>5개씩 보기</option>

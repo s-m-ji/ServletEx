@@ -5,14 +5,48 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>list.jsp</title>
 <link rel="stylesheet" href="../css/style.css">
 <title>list.jsp</title>
 <script>
  function rentBook(){
-	 var idx = document.querySelector('input[type=checkbox]:checked').value;
-		location.href='../rentBook?idx='+idx;
-	}
+	// 체크박스가 선택된 요소의 value값을 ,(콤마)로 연결하고 삭제 요청
+	 delNoList = document.querySelectorAll('[name=delNo]:checked');
+	 let delNo = "";
+	 delNoList.forEach((e)=>{
+		delNo += e.value + ','; 
+	 });
+	 delNo = delNo.substr(0, delNo.length-1);
+	 
+	 console.log(delNo);
+	 
+	 searchForm.action = "../book/rent.book";
+	 searchForm.delNo.value = delNo;
+	 searchForm.submit();
+ }
+ 
+ function deleteBook(){
+	 // 체크박스가 선택된 요소의 value값을 ,(콤마)로 연결하고 삭제 요청
+	 delNoList = document.querySelectorAll('[name=delNo]:checked');
+	 let delNo = "";
+	 delNoList.forEach((e)=>{
+		delNo += e.value + ','; 
+	 });
+	 delNo = delNo.substr(0, delNo.length-1);
+	 
+	 console.log(delNo);
+	 
+	 searchForm.action = "../book/delete.book";
+	 searchForm.delNo.value = delNo;
+	 searchForm.submit();
+ }
+ 
+ let message = "${message}";
+ if(message != null && "" != message){
+	 alert(message);
+ }
+ 
+ 
 </script>
 </head>
 <body>
@@ -29,21 +63,17 @@
 			<td colspan="6">
 			<c:if test="${sessionScope.adminYn eq 'Y'}" var="res1">
 				<!-- 어드민 계정인 경우 등록 / 삭제 버튼 출력 -->
-				<form action="">
-					<input type="button" name="insert" value="도서 등록">
-					<input type="button" name="delete" value="도서 삭제">
-				</form>
+				<input type="button" name="insert" value="도서 등록" onclick="location.href='./insert.book'">
+				<input type="button" name="delete" value="도서 삭제" onclick="deleteBook();">
 			</c:if>
 			<c:if test="${ not res1 }">
-				<form action="">
-					<input type="button" name="rent" value="바로 대출" onclick="rentBook();">
-					<input type="button" name="cart" value="책 바구니">
-				</form>
+				<input type="button" name="rent" value="바로 대출" onclick="rentBook();">
+				<input type="button" name="cart" value="책 바구니">
 			</c:if>
 			</td>
 		</tr>
 		<tr>
-			<th>삭제</th>		
+			<th>선택</th>		
 			<th>번호</th>		
 			<th width="35%">제목</th>		
 			<th>작가</th>		
@@ -51,11 +81,11 @@
 			<th>대출여부</th>		
 		</tr>
 		<c:choose>
-			<c:when test="${empty list}">
+			<c:when test="${empty map.list}">
 				<tr><td colspan="6">🤷‍♀ 등록된 게시글이 없는걸 🤷‍♀️</tr>
 			</c:when>
 			<c:otherwise>
-				<c:forEach items="${list}" var="book">
+				<c:forEach items="${map.list}" var="book">
 					<tr>
 						<!-- 삭제용 체크박스 -->
 						<td><input type="checkbox" name="delNo" value="${book.no}"></td>

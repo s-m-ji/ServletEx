@@ -39,10 +39,9 @@ public class LoginAction extends HttpServlet {
         		session.setAttribute("adminYn", "Y");
         	} 
         	
-			request.getRequestDispatcher("../book/list.book").forward(request, response);
-			
+			//request.getRequestDispatcher("../book/list.book").forward(request, response);
         	// doPost에서 충돌이 나는 것 같다고하셔서 sendRedirect로 바꿨으나 오류가 생기지 않는 듯 함..?
-        	// response.sendRedirect("../book/list.book");
+        	 response.sendRedirect("../book/list.book");
         	
         } else {
         	response.sendRedirect("../Book/index.jsp?error=Y");

@@ -31,7 +31,10 @@
 	</table>
 	<!-- 글쓰기 버튼 -->
 	<table>
-		<tr><td><button onclick="location=href='../mvcboard/write.do'">글쓰기</button></td></tr>
+		<tr>
+		<td><button onclick="location=href='../book/write.book'">글쓰기</button></td>
+		<td><button onclick="location=href='../book/list.book?pageNo='">목록 바로가기</button></td>
+		</tr>
 	</table>
 	<!-- 페이지네이션 블록 -->
 	<table>

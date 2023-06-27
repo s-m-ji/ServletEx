@@ -1,25 +1,35 @@
 package com.library.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.library.common.ConnectionUtil;
 import com.library.common.DBConnectionPool;
 import com.library.vo.Book;
+import com.library.vo.Criteria;
 
 public class BookDao {
 	/**
 	 * 도서목록 조회
 	 * @return
 	 */
-	public List<Book> getList(){
+	public List<Book> getList(Criteria cr){
 		List<Book> list = new ArrayList<Book>();
 		
-		String sql = "select * from libboard";
+		String sql = "SELECT * FROM ("
+				+ " SELECT ROWNUM rn, lib.* FROM ("
+				+ " SELECT idx, title, writer, publisher, rent_yn FROM libboard";
+		if(cr.getsWord() != null && !"".equals(cr.getsWord())){
+			sql += " WHERE " + cr.getsField()
+					+ " LIKE '%" + cr.getsWord() + "%'";
+		}
+			sql += " ORDER BY idx DESC ) lib ) WHERE rn BETWEEN "
+					+ cr.getStartNo() + " AND " + cr.getEndNo();
+
 		/* String sql = 
 				"select no, title"
 				+ "    , nvl((select 대여여부 "
@@ -83,21 +93,25 @@ public class BookDao {
 	 */
 	public int insert(Book book) {
 		int res = 0;
+		System.out.println("------------ Dao insert book : " + book);
 		
 		String sql = String.format
-	("insert into book values (SEQ_BOOK_NO.NEXTVAL, '%s', '%s', '%s')"
-				, book.getTitle(), book.getRentyn(), book.getAuthor());
-
-		// 실행될 쿼리를 출력해봅니다
-		//System.out.println(sql);
-		
-		try (Connection conn = ConnectionUtil.getConnection();
+							("insert into libboard (idx, title, writer, publisher)"
+									+ " values (SEQ_libboard_idx.NEXTVAL, '%s', '%s', '%s')"
+										, book.getTitle(), book.getAuthor(), book.getPublisher());
+	/*
+	 * ("insert into libboard (idx, title, rent_yn, writer) values (SEQ_libboard_idx.NEXTVAL, '%s', '%s', '%s')"
+	 * , book.getTitle(), book.getRentyn(), book.getAuthor());
+	 */	
+		try (Connection conn = DBConnectionPool.getConnection();
 				Statement stmt = conn.createStatement();	){
 			res = stmt.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
+		System.out.println("------------ Dao insert sql : " + sql);
+		System.out.println("------------ Dao insert res : " + res);
 		return res;
 	}
 	
@@ -105,22 +119,21 @@ public class BookDao {
 	 * 도서 삭제
 	 * @return
 	 */
-	public int delete(int no) {
+	public int delete(String noStr) {
 		int res = 0;
-		
+		System.out.println("------------Dao delete noStr : " + noStr);
 		String sql = String.format
-						("delete from book where no = %d", no);
-	
-		// 실행될 쿼리를 출력해봅니다
-		//System.out.println(sql);
+						("delete from libboard where idx in (%s)", noStr);
 		
-		try (Connection conn = ConnectionUtil.getConnection();
+		System.out.println("------------Dao delete sql : " + sql);
+		try (Connection conn = DBConnectionPool.getConnection();
 				Statement stmt = conn.createStatement();	){
 			res = stmt.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
+		System.out.println("------------Dao delete res : " + res);
 		return res;
 	}
 	
@@ -128,13 +141,13 @@ public class BookDao {
 	 * 도서 업데이트
 	 * @return
 	 */
-	public int update(int no, String rentYN) {
+	public int update(String delNoStr, String rentYN) {
 		int res = 0;
 		
 		String sql = String.format
-		("update libBoard set rent_yn = '%s' where idx = %d", rentYN ,no);
+		("update libBoard set rent_yn = '%s' where idx = %s", rentYN ,delNoStr);
 
-		try (Connection conn = ConnectionUtil.getConnection();
+		try (Connection conn = DBConnectionPool.getConnection();
 				Statement stmt = conn.createStatement();	){
 			res = stmt.executeUpdate(sql);
 		} catch (SQLException e) {
@@ -144,13 +157,13 @@ public class BookDao {
 		return res;
 	}
 
-	public String getRentYN(int bookNo) {
+	public String getRentYN(String delNoStr) {
 		String rentYN = "";
 		String sql = 
 				String.format(
-					"SELECT rent_yn FROM libBoard WHERE idx = %s", bookNo);
-		System.out.println("------------ getRentYN bookNo : " + bookNo);
-		try (Connection conn = ConnectionUtil.getConnection();
+					"SELECT rent_yn FROM libBoard WHERE idx = %s", delNoStr);
+		System.out.println("------------ getRentYN bookNo : " + delNoStr);
+		try (Connection conn = DBConnectionPool.getConnection();
 				Statement stmt= conn.createStatement();
 				ResultSet rs = stmt.executeQuery(sql);){
 			if(rs.next()) {
@@ -163,6 +176,33 @@ public class BookDao {
 		
 		System.out.println("------------ getRentYN rentYN : " + rentYN);
 		return rentYN;
+	}
+
+	/**
+	 * 게시글 총 개수 카운트
+	 * @param cr
+	 * @return
+	 */
+	public int getTotalCnt(Criteria cr) {
+		int res = 0;
+		String sql = "SELECT COUNT(*) FROM libboard";
+		if(cr.getsWord() != null && !"".equals(cr.getsWord())) {
+			sql += " WHERE "	+ cr.getsField()
+					+ " LIKE '%" + cr.getsWord() + "%'";
+		}
+		try (	Connection conn = DBConnectionPool.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery();
+				) {
+			if(rs.next()) {
+				res = rs.getInt(1); 
+			}
+			System.out.println(" ---------- res : " + res);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return res;
 	}
 
 }

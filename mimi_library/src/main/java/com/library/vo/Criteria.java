@@ -1,4 +1,4 @@
-package dto;
+package com.library.vo;
 
 public class Criteria {
 
@@ -32,9 +32,6 @@ public class Criteria {
 		} 
 
 		if (pageNoStr != null && !pageNoStr.equals("")
-				// TODO 왜 !"" 라고 해야하는지 ?? -> 안 그럼 페이지 이동이 불가 ! 항상 1쪽만 찍힘 ***OK
-				// TODO "".equals(pageNoStr) 이 처리는 하지 않아도 되는지? -> ""이면 빈 문자열을 parseInt 할 수 없음 ***OK
-				// !"".equals(pageNoStr) 이거 아예 없으면 ? -> 검색 이후에 항상 1쪽을 보여주기 위해서 현재 input value="1"로 설정해두엇음 그럼 ok ***OK
 				&& amountStr != null && !amountStr.equals("")) {
 			pageNo = Integer.parseInt(pageNoStr);
 			amount = Integer.parseInt(amountStr);
@@ -45,7 +42,6 @@ public class Criteria {
 				pageNo = 1;
 				amount = 10;
 			}	
-	
 		}
 	}
 	

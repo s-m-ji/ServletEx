@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="../css/library.css">
 <link rel="stylesheet" href="../css/style.css">
-<title>Index.jsp</title>
+<title>index.jsp</title>
 <style>
 	.loginbox {margin: 0 auto;}
 </style>

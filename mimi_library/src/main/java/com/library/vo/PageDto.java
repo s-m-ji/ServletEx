@@ -1,4 +1,4 @@
-package dto;
+package com.library.vo;
 
 public class PageDto {
 
