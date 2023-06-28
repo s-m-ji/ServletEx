@@ -6,6 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>header.jsp</title>
+<style>
+	header {padding:10px;
+			text-align:center;
+			 background-color: #d8d8fd;}
+</style>
 </head>
 <body>
 	<header>
@@ -23,7 +28,7 @@
 				<h3>[Member 페이지]</h3>
 				<span><b class="point">${userId}</b> 왔슈?</span>
      			<button onclick="location.href='../Login/logoutLibrary.jsp'">로그아웃</button>
-			    <button>도서 반납</button>
+			    <button onclick="location.href='../book/mypage.book'">마이페이지</button>
 			</c:if>
 		<!-- 로그인 전 유저 -->
 			<c:if test="${empty sessionScope.userId}" var="res2">

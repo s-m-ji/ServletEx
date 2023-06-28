@@ -7,47 +7,8 @@
 <meta charset="UTF-8">
 <title>list.jsp</title>
 <link rel="stylesheet" href="../css/style.css">
+<script src='../js/custom.js'></script>
 <title>list.jsp</title>
-<script>
- function rentBook(){
-	// 체크박스가 선택된 요소의 value값을 ,(콤마)로 연결하고 삭제 요청
-	 delNoList = document.querySelectorAll('[name=delNo]:checked');
-	 let delNo = "";
-	 delNoList.forEach((e)=>{
-		delNo += e.value + ','; 
-	 });
-	 delNo = delNo.substr(0, delNo.length-1);
-	 
-	 console.log(delNo);
-	 
-	 searchForm.action = "../book/rent.book";
-	 searchForm.delNo.value = delNo;
-	 searchForm.submit();
- }
- 
- function deleteBook(){
-	 // 체크박스가 선택된 요소의 value값을 ,(콤마)로 연결하고 삭제 요청
-	 delNoList = document.querySelectorAll('[name=delNo]:checked');
-	 let delNo = "";
-	 delNoList.forEach((e)=>{
-		delNo += e.value + ','; 
-	 });
-	 delNo = delNo.substr(0, delNo.length-1);
-	 
-	 console.log(delNo);
-	 
-	 searchForm.action = "../book/delete.book";
-	 searchForm.delNo.value = delNo;
-	 searchForm.submit();
- }
- 
- let message = "${message}";
- if(message != null && "" != message){
-	 alert(message);
- }
- 
- 
-</script>
 </head>
 <body>
 <!-- 헤더 -->
@@ -93,7 +54,7 @@
 						<td><a href="../book/view.book?idx=${book.no}">${book.title}</a></td>
 						<td>${book.author}</td>
 						<td>${book.publisher}</td>
-						<td>${book.rentyn}</td>
+						<td>${book.rent_yn}</td>
 					</tr>
 				</c:forEach>
 			</c:otherwise>

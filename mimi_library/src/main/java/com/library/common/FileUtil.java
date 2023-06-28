@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -131,6 +133,37 @@ public class FileUtil {
 		}
 	}
 	
+	/**
+	 * 파일 업로드 시 원본 파일명을 수정된 파일명으로 저장
+	 * @param saveDirectory
+	 * @param ofileName
+	 * @return
+	 */
+	public static String fileNameChange(String saveDirectory, String ofileName) {
+		
+		// if(ofileName != null) { -> TODO 파일을 업로드하지 않아도 도서 등록이 가능하도록 처리 필요.
+		
+		// 첨부파일의 이름만
+		  String fileName = ofileName.substring(0, ofileName.lastIndexOf("."));
+					
+		
+		// 첨부파일의 확장자
+			String exp = ofileName.substring(ofileName.lastIndexOf("."));
+			
+			// H: 0~23시, S: millisecond초
+			String date = new SimpleDateFormat("yyyyMMdd_HmsS").format(new Date());
+			
+			// 수정된 파일
+			String nfileName = fileName +"_"+ date + exp;
+
+			/* 파일명 변경 */
+			File oldFile = new File(saveDirectory + File.separator + ofileName);
+			File newFile = new File(saveDirectory + File.separator + nfileName);
+			oldFile.renameTo(newFile);
+			
+			return nfileName;
+		// }
+	}
 	
 	
 	

@@ -63,7 +63,14 @@ mark {
     border-radius: 15px;
     display: inline-block;
         font-weight: bold;
-        }
+}
+.point.rest {
+	background:#ceceff;
+}
+.point.rest.red {
+	background:#ffafa6;
+}
+
 a {
   border-radius: 15px;
   padding: 5px 15px;

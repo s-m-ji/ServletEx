@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="../css/style.css">
-<title>write.jsp</title>
+<title>edit.jsp</title>
 <script>
 	form.title.focus();
 	
@@ -37,21 +37,22 @@
 <body>
 <!-- 헤더 -->
 <%@ include file="../common/header.jsp" %>
-	<h2>도서 등록</h2>
-	<form action="../book/insert.book" method="post" 
+	<h2>도서 수정</h2>
+	<form action="../book/edit.book" method="post" 
 		enctype="multipart/form-data" onsubmit="return validateForm(this);">
+		도서번호 : <input type="text" name="no" value="${book.no }">
 		<table border="1" class="listTable writeTable">
 			<tr>
 				<th>ID</th><td><input type="text" name="id" size="50" value="${sessionScope.userId}" readonly="readonly"></td>
 			</tr>
 			<tr>
-				<th>도서명</th><td><input type="text" name="title" size="50" autofocus="autofocus"></td>
+				<th>도서명</th><td><input type="text" name="title" size="50" autofocus="autofocus" value="${book.title}"></td>
 			</tr>
 			<tr>
-				<th>작가명</th>	<td><input type="text" name="author" size="50"></td>
+				<th>작가명</th>	<td><input type="text" name="author" size="50" value="${book.author}"></td>
 			</tr>	
 			<tr>
-				<th>출판사명</th>	<td><input type="text" name="publisher" size="50"></td>
+				<th>출판사명</th>	<td><input type="text" name="publisher" size="50" value="${book.publisher}"></td>
 			</tr>	
 			<tr>
 				<th>첨부 파일(책 이미지)</th>	<td><input type="file" name="book_img" multiple="multiple"></td>
