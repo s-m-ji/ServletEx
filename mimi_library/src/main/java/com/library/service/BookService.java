@@ -56,6 +56,27 @@ public class BookService {
 		return map;
 	}
 	
+	
+	public Map<String, Object> getBasketBook(Criteria cr, String userId) {
+Map<String, Object> map = new HashMap<>();
+		
+		// 리스트 조회
+		List<Book> list = dao.getBasketBook(cr, userId);
+		
+		// 총 갯수 조회
+		int totalCnt = dao.getTotalCntBasket(cr, userId);
+		System.out.println(" ---------- totalCnt : " + totalCnt);
+		
+		// 페이지 객체 (pageDto)
+		PageDto pDto = new PageDto(totalCnt, cr);
+		
+		map.put("list", list);
+		map.put("totalCnt", totalCnt);
+		map.put("pDto", pDto);
+		
+		return map;
+	}
+	
 	/**
 	 * 도서 상세 조회
 	 * @param num
@@ -132,6 +153,18 @@ public class BookService {
 		System.out.println("------------ Service res : " + res);
 		return res;
 	}
+
+	public int basketBook(Book book, String delNo) {
+		int res = dao.basketBook(book, delNo);
+		
+		if(res>0) {
+			System.out.println("책 바구니에 등록 완료");
+		} else {
+			System.err.println("책 바구니에 등록 중 오류 발생");
+		}
+		return res;
+	}
+
 	
 }
 

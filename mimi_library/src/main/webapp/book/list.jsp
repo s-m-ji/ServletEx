@@ -29,7 +29,7 @@
 			</c:if>
 			<c:if test="${ not res1 }">
 				<input type="button" name="rent" value="바로 대출" onclick="rentBook();">
-				<input type="button" name="cart" value="책 바구니">
+				<input type="button" name="cart" value="책 바구니" onclick="basketBook();">
 			</c:if>
 			</td>
 		</tr>

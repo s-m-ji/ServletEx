@@ -5,10 +5,8 @@ public class Book {
 	private String title;	// 도서명
 	private String author;	// 작가
 	private String publisher;	// 출판사
-	
 	private String ofile;	
 	private String sfile;	
-	
 	private String id;	
 	private String rent_yn;	// 도서 대여여부
 	private String rent_no;	// 도서 대여번호
@@ -16,9 +14,9 @@ public class Book {
 	private String return_exp_date;	// 반납예정일 endDate
 	private String return_date;	// 반납일 returnDate
 	private int rest_date;	// 잔여일
+	private String basket ; // 책 바구니
+	private String reserve_no; // 도서 예약번호
 
-	
-	
 	
 	// 도서를 추가할 경우 도서명과 작가명만 알고 있으면 생성 가능
 	public Book(String title, String author) {
@@ -167,6 +165,22 @@ public class Book {
 
 	public void setRest_date(int rest_date) {
 		this.rest_date = rest_date;
+	}
+
+	public String getBasket() {
+		return basket;
+	}
+
+	public void setBasket(String basket) {
+		this.basket = basket;
+	}
+
+	public String getReserve_no() {
+		return reserve_no;
+	}
+
+	public void setReserve_no(String reserve_no) {
+		this.reserve_no = reserve_no;
 	}
 	
 	

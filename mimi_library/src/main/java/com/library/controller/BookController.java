@@ -38,8 +38,7 @@ public class BookController extends HttpServlet {
 			Criteria cr = new Criteria(sField, sWord, pageNo, sAmount);
 			request.setAttribute("map", bs.getList(cr));
 			
-			//ipageNo == null? pageNo = 1 : Integer.parseInt(pageNo)); TODO 널일 경우 처리를 여기서 다시 해보기
-			request.setAttribute("pageNo", cr.getEndNo());
+			request.setAttribute("pageNo", cr.getPageNo());
 			request.setAttribute("sAmount", cr.getAmount());
 			
 			System.out.println("pageNo : " + pageNo);
@@ -50,7 +49,7 @@ public class BookController extends HttpServlet {
 		
 		
 		// ==================== 마이페이지 조회 ====================
-		if(uri.indexOf("mypage")>0) {
+		else if(uri.indexOf("mypage")>0) {
 			String sField = request.getParameter("searchField");
 			String sWord = request.getParameter("searchWord");
 			String pageNo = request.getParameter("pageNo");
@@ -58,12 +57,35 @@ public class BookController extends HttpServlet {
 			
 			Criteria cr = new Criteria(sField, sWord, pageNo, sAmount);
 			request.setAttribute("map", bs.getListMyPage(cr, userId));
-			
-			request.setAttribute("pageNo", cr.getEndNo());
+			request.setAttribute("pageNo", cr.getPageNo());
 			request.setAttribute("sAmount", cr.getAmount());
 			
-			System.out.println("pageNo : " + pageNo);
-			System.out.println("sAmount : " + sAmount);
+			request.setAttribute("basket", bs.getBasketBook(cr, userId));
+			
+			
+			System.out.println("----------- BookController 진입 / mypage");
+			
+			String delNo = request.getParameter("delNo");
+			System.out.println("----------- BookController delNo : " + delNo);
+			
+			if(session.getAttribute("userId") == null) {
+				JSPFunction.alertBack("로그인 후 이용 가능", response);
+			}
+			
+			if(delNo != null && !"".equals(delNo)) {
+				Book book = new Book();
+				book.setId(userId);
+							
+				int res = bs.basketBook(book, delNo);
+				if(res>0) {
+					System.out.println(res+"건 책 바구니에 추가되었습니다.");
+					
+					JSPFunction.alertLocation("책 바구니에 추가 성공 ~ ", "./list.book", response);
+					
+				} else {
+					System.err.println("책 바구니에 추가 중 오류가 발생 하였습니다.");
+				}
+			}
 			
 			request.getRequestDispatcher("./mypage.jsp").forward(request, response);
 		} 
@@ -172,13 +194,16 @@ public class BookController extends HttpServlet {
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String uri = request.getRequestURI();
+		System.out.println("***** doPost 요청 uri : " + uri);
+		
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("userId");
+		
 		// ==================== 도서 등록 수행 ====================
 		// doGet(request, response); 
 		// -> doPost에서 doGet을 실행시킬거면 post 방식으로 받아올것들을 get 메소드에서 작성해도 된다. 
 		
-		String uri = request.getRequestURI();
-		
-		System.out.println("***** doPost 요청 uri : " + uri);
 		if(uri.indexOf("insert")>0) {			
 		System.out.println("----------- BookController 진입 / insert");
 		
@@ -266,10 +291,6 @@ public class BookController extends HttpServlet {
 		else if(uri.indexOf("rent")>0) {
 			System.out.println("----------- BookController 진입 / rent");
 			
-			// 로그인 아이디 확인
-			HttpSession session = request.getSession();
-			String userId = (String) session.getAttribute("userId");
-			
 			if(session.getAttribute("userId") == null) {
 				JSPFunction.alertBack("로그인 후 이용 가능", response);
 				// TODO 로그인 페이지로 이동할 수도 있음
@@ -287,17 +308,12 @@ public class BookController extends HttpServlet {
 			} else {
 				JSPFunction.alertBack("슬프게도 대출에 실패했어..", response);
 				System.err.println("대출중 오류 발생 !");
-				
 			}
 			
 		} 
 		// ==================== 도서 반납 수행 ====================
 		else if(uri.indexOf("return")>0) {
 			System.out.println("----------- BookController 진입 / return");
-			
-			// 로그인 아이디 확인
-			HttpSession session = request.getSession();
-			String userId = (String) session.getAttribute("userId");
 			
 			if(session.getAttribute("userId") == null) {
 				JSPFunction.alertBack("로그인 후 이용 가능", response);
@@ -316,10 +332,10 @@ public class BookController extends HttpServlet {
 			} else {
 				JSPFunction.alertBack("슬프게도 반납에 실패했어..", response);
 				System.err.println("반납중 오류 발생 !");
-				
 			}
 			
-		} 
+		}
+		
 		
 		
 	}

@@ -137,6 +137,40 @@ public class BookDao {
 		return book;
 	}
 	
+	public List<Book> getBasketBook(Criteria cr, String userId) {
+		List<Book> list = new ArrayList<Book>();
+		
+		String sql = "SELECT * FROM ("
+				+ " SELECT ROWNUM rn, lib.* FROM ("
+				+ " SELECT idx, title, writer, publisher, basket "
+				+ " FROM libboard "
+				+ " WHERE rent_yn = 'N' AND basket = 'Y' ";
+		if(cr.getsWord() != null && !"".equals(cr.getsWord())){
+			sql += " AND " + cr.getsField()	+ " LIKE '%" + cr.getsWord() + "%'";
+		}
+			sql += " ORDER BY idx DESC ) lib ) WHERE rn BETWEEN "
+					+ cr.getStartNo() + " AND " + cr.getEndNo();
+	
+		try (Connection conn = DBConnectionPool.getConnection();
+				Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery(sql)){
+			while(rs.next()) {
+				Book book = new Book();
+				book.setNo(rs.getInt("idx"));
+				book.setTitle(rs.getString("title"));
+				book.setAuthor(rs.getString("writer"));
+				book.setPublisher(rs.getString("publisher"));
+				book.setBasket(rs.getString("basket"));
+				
+				list.add(book);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
 	
 	/**
 	 * 도서 등록
@@ -269,6 +303,35 @@ public class BookDao {
 		return res;
 	}
 
+	
+	public int getTotalCntBasket(Criteria cr, String userId) {
+		int res = 0;
+		String sql = "SELECT COUNT(*) FROM ("
+				+ " SELECT ROWNUM rn, lib.* FROM ("
+				+ " SELECT idx, title, writer, publisher, basket "
+				+ " FROM libboard "
+				+ " WHERE rent_yn = 'N' ";
+		if(cr.getsWord() != null && !"".equals(cr.getsWord())){
+			sql += " AND " + cr.getsField()	+ " LIKE '%" + cr.getsWord() + "%'";
+		}
+			sql += " ORDER BY idx DESC ) lib ) WHERE rn BETWEEN "
+					+ cr.getStartNo() + " AND " + cr.getEndNo();
+		try (	Connection conn = DBConnectionPool.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery();
+				) {
+			if(rs.next()) {
+				res = rs.getInt(1); 
+			}
+			System.out.println(" ---------- res : " + res);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+	
+	
 	/**
 	 * 도서 대출 
 	 * @param book
@@ -434,6 +497,29 @@ public class BookDao {
 		System.out.println("------------ Dao update res : " + res);
 		return res;
 	}
+
+	public int basketBook(Book book, String delNo) {
+		int res = 0;
+		String[] numbers = delNo.split(",");
+        for (int i = 0; i < numbers.length; i++) {
+        	int value = Integer.parseInt(numbers[i].trim());
+    		
+    		String sql = "update libboard set basket = 'Y' where idx = ?";
+
+    		try (Connection conn = DBConnectionPool.getConnection();
+    				PreparedStatement pstmt = conn.prepareStatement(sql);
+    				){
+    			pstmt.setInt(1, value);
+    			
+    			res = pstmt.executeUpdate();
+    		} catch (SQLException e) {
+    			e.printStackTrace();
+    		}
+        }
+        	return res;
+	}
+
+
 
 }
 

@@ -7,6 +7,7 @@ public class Member {
 	private String adminyn;
 	private String status;
 	private String grade;
+	private String reserve_no;
 	
 	
 	public Member(String id, String pw, String name, String adminyn, String status, String grade) {
@@ -65,7 +66,13 @@ public class Member {
 		this.grade = grade;
 	}
 	
-	
+	public String getReserve_no() {
+		return reserve_no;
+	}
+
+	public void setReserve_no(String reserve_no) {
+		this.reserve_no = reserve_no;
+	}
 	
 	
 }

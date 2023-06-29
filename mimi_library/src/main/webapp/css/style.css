@@ -8,7 +8,7 @@
   font-style: normal;
 }
 * {
-  font-family: "SUITE-Regular";
+  font-family: "SUITE-Regular" !important;
   list-style: none;
 }
 body {
@@ -16,6 +16,7 @@ body {
 }
 
 h2{
+	margin: 20px 0;
 	text-align:center;
 }
 
@@ -66,6 +67,9 @@ mark {
 }
 .point.rest {
 	background:#ceceff;
+}
+.point.return {
+	background:#e0e0e0;
 }
 .point.rest.red {
 	background:#ffafa6;
@@ -194,4 +198,30 @@ td.content {
       opacity: 1;
       transition: opacity 1s, transform 1s;
     }
+
+.nav-pills .nav-link {
+    background-color: #e5e5e5;
+	border: 10px solid #e5e5e5;
+    border-bottom: none;
+    border-radius: 0;
+    font-weight: bold;
+}
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+	background-color: #bebeff;
+	border: 10px solid #bebeff;
+	border-bottom: none;
+    border-radius: 0;
+}
+
+.nav-pills .nav-link.active:hover, .nav-pills .show>.nav-link:hover {
+	color: #7f7fff;
+    
+    }
+.tab-content>.active {
+	border: 10px solid #bebeff;
+}
+
+
+
+
 

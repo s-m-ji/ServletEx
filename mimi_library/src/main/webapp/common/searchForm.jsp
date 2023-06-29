@@ -32,7 +32,7 @@ function changePageSize(value) {
 		            <input type="submit" value="검색하기" />
 		            
 		            <!-- 페이지 번호, 삭제할 글 번호 -->
- 		            <input type="text" name="pageNo" value="1" >
+ 		            <input type="hidden" name="pageNo" value="1" >
  		            <input type="text" name="delNo" >
 		            
 		            <select name="searchAmount" onchange="changePageSize(this.value)">

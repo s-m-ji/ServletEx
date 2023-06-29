@@ -44,7 +44,7 @@ public class LoginAction extends HttpServlet {
         	 response.sendRedirect("../book/list.book");
         	
         } else {
-        	response.sendRedirect("../Book/index.jsp?error=Y");
+        	response.sendRedirect("../book/index.jsp?error=Y");
         }
 	}
 

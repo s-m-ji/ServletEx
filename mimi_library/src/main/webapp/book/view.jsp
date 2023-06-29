@@ -50,16 +50,16 @@ ${map.message  }
         		</c:when>
         		<c:when test="${book.id eq sessionScope.userId }"> 
         			<td><button onclick="setAction('./return.book')">반납하기</button></td>
-        			<td>대여기간</td> <td>${ book.rent_date } ~ ${ book.return_exp_date }</td>
+        			<td>대여기간</td> <td  colspan="4">${ book.rent_date } ~ ${ book.return_exp_date }</td>
         		</c:when>
         		<c:otherwise>
         			<td>대여중</td>
-        			<td> 대여기간</td> <td>${ book.rent_date } ~ ${ book.return_exp_date }</td>
+        			<td>대여기간</td> <td  colspan="4">${ book.rent_date } ~ ${ book.return_exp_date }</td>
         		</c:otherwise>
         	</c:choose>
     </tr>
     <tr>
-    	<td height="200px">상세설명</td><td colspan="3"></td>
+    	<td height="200px">상세설명</td><td colspan="5"></td>
     </tr>
     <!-- 하단 메뉴(버튼) -->
     <tr>
